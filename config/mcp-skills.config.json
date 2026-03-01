@@ -1,0 +1,19 @@
+{
+  "skillsRoot": "./skills",
+  "scriptExecution": {
+    "enabledByDefault": false,
+    "timeoutMs": 30000,
+    "maxOutputBytes": 65536,
+    "allowedScripts": {
+      "document-qa": [
+        "scripts/echo-task.js"
+      ]
+    }
+  },
+  "references": {
+    "maxTotalBytes": 262144
+  },
+  "logging": {
+    "debug": false
+  }
+}
