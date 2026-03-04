@@ -30,5 +30,6 @@ Use this structure for quantitative or experimental studies.
 ## Common Failure Modes
 
 1. Hypotheses missing or too vague.
-2. Statistical claims without citation or without result traceability.
-3. Discussion that overstates causality beyond design limits.
+2. External statistical claims presented without citations.
+3. Primary result statements presented without result traceability.
+4. Discussion that overstates causality beyond design limits.

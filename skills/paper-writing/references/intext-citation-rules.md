@@ -29,7 +29,8 @@ Apply author-date citations consistently.
 
 ## Citation Integrity Rules
 
-1. Attach citation at sentence level for factual claims.
+1. Attach citation at sentence level for external factual, numerical, or prior-work claims.
 2. Do not stack citations that do not support the exact claim.
-3. If support is missing, mark `[CITATION NEEDED]`.
-4. If source identity is uncertain, mark `[VERIFY SOURCE]`.
+3. For primary study results produced in the current manuscript (for example, sample sizes or effect estimates), require analysis traceability instead of forced external citations.
+4. If support for an external or prior-work claim is missing, mark `[CITATION NEEDED]`.
+5. If source identity is uncertain, mark `[VERIFY SOURCE]`.

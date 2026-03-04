@@ -10,10 +10,11 @@ Run this checklist before returning final output.
 
 ## B. Evidence and Citation Checks
 
-1. Every factual or prior-work claim has support.
-2. Unsupported claims are marked `[CITATION NEEDED]`.
-3. In-text citations use APA 7 author-date format.
-4. Direct quotes include page or paragraph locators.
+1. Every external factual, numerical, or prior-work claim has support.
+2. Unsupported external or prior-work claims are marked `[CITATION NEEDED]`.
+3. Primary study results (for example, sample sizes or effect estimates) are traceable to analysis outputs.
+4. In-text citations use APA 7 author-date format.
+5. Direct quotes include page or paragraph locators.
 
 ## C. Reference List Checks
 

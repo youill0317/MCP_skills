@@ -10,12 +10,11 @@ Use this structure for synthesis-first papers.
 4. Review Method (search/selection/coding)
 5. Synthesis of Findings
 6. Implications and Gaps
-7. References
+7. Effect Size Model and Heterogeneity (meta-analysis only)
+8. Publication Bias Checks (meta-analysis only)
+9. References
 
-For meta-analysis, add:
-
-8. Effect Size Model and Heterogeneity
-9. Publication Bias Checks
+For literature reviews without meta-analysis, place References immediately after section 6.
 
 ## Writing Priorities
 

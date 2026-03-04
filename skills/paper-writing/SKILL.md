@@ -1,6 +1,6 @@
 ---
 name: paper-writing
-description: Write and revise academic papers in APA 7 style from outline to final manuscript, including Korean main-text drafting, author-date in-text citations, reference list normalization, and table/figure caption checks. Use when users ask to draft, restructure, edit, or APA-format empirical, literature review/meta-analysis, theoretical, methodological, qualitative, or mixed-methods papers.
+description: Write and revise academic papers in APA 7 style from outline to final manuscript, including language-adaptive drafting (default Korean, user-requested language override), author-date in-text citations, reference list normalization, and table/figure caption checks. Use when users ask to draft, restructure, edit, or APA-format empirical, literature review/meta-analysis, theoretical, methodological, qualitative, or mixed-methods papers.
 ---
 
 # Mission
@@ -12,7 +12,7 @@ Produce complete, defensible APA 7 paper drafts with clear structure, traceable 
 1. Support end-to-end paper writing: framing, outlining, drafting, revision, and final APA checks.
 2. Default prose language to Korean unless the user requests another language.
 3. Keep in-text citations and references in APA 7 author-date style.
-4. Apply strict evidence policy: mark unsupported factual claims as `[CITATION NEEDED]`.
+4. Apply strict evidence policy: mark unsupported external or prior-work claims as `[CITATION NEEDED]` and require traceability for primary study results.
 5. Never invent sources, DOIs, page numbers, sample sizes, or numeric findings.
 
 ## Paper Type Selection
@@ -33,19 +33,20 @@ If the user asks for a hybrid design, pick the dominant type and explicitly note
 1. Capture assignment constraints: domain, audience, length, deadline, and required sections.
 2. Confirm paper type and research question or thesis statement.
 3. Build a section-level outline aligned with APA 7 and the selected paper type.
-4. Draft each section in Korean with precise claim boundaries.
-5. Attach in-text citations to every factual, numerical, or prior-work claim.
+4. Draft each section in the user-requested language; default to Korean if unspecified.
+5. Attach in-text citations to every external factual, numerical, or prior-work claim, and validate primary study results through analysis traceability.
 6. Normalize the reference list to APA 7 and ensure one-to-one mapping with in-text citations.
 7. Validate table/figure numbering, titles, and notes.
 8. Run the final quality gate and report remaining issues clearly.
 
 ## Strict Citation Policy
 
-1. Do not leave factual claims uncited.
-2. Insert `[CITATION NEEDED]` immediately after unsupported claims.
-3. Do not fabricate bibliographic metadata. If data is missing, mark `[MISSING METADATA: field]`.
-4. If source quality is uncertain, flag `[VERIFY SOURCE]`.
-5. Preserve user-provided source identifiers unless they violate APA 7 formatting.
+1. Do not leave external factual or prior-work claims uncited.
+2. Insert `[CITATION NEEDED]` immediately after unsupported external or prior-work claims.
+3. For primary study results (for example, sample sizes or effect estimates), require analysis traceability rather than forced external citations.
+4. Do not fabricate bibliographic metadata. If data is missing, mark `[MISSING METADATA: field]`.
+5. If source quality is uncertain, flag `[VERIFY SOURCE]`.
+6. Preserve user-provided source identifiers unless they violate APA 7 formatting.
 
 ## Output Standard
 

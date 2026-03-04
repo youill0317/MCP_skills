@@ -16,9 +16,9 @@ If any required input is missing, continue with explicit assumptions and list th
 
 1. Generate a section-level outline.
 2. Draft section by section.
-3. Attach in-text citations while drafting, not after.
+3. Attach in-text citations while drafting for external or prior-work claims, not after.
 4. Compile and normalize reference list.
-5. Run quality gate and produce issue log.
+5. Run quality gate and produce issue log, including traceability gaps for primary study results.
 
 ## Output Contract
 
@@ -35,6 +35,6 @@ Return output in this order:
 
 Use explicit tags:
 
-- `[CITATION NEEDED]` for unsupported claims.
+- `[CITATION NEEDED]` for unsupported external or prior-work claims.
 - `[MISSING METADATA: field]` for incomplete references.
 - `[VERIFY SOURCE]` for questionable source reliability.
