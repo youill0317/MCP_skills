@@ -65,7 +65,7 @@ For each update cycle, produce:
 
 ## Resource Loading
 
-Pass only the needed `reference_paths` to `run_skill`.
+References are not loaded automatically; you must pass them explicitly via `reference_paths` when calling `run_skill`. Pass only the references you actually need.
 
 - Load `references/obsidian-linking-playbook.md` for note architecture, backlink strategy, and MOC patterns.
 - Load `references/agentic-knowledge-loop.md` for the recurring capture-refine-retrieve loop and session checklist.
