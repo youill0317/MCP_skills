@@ -1,57 +1,67 @@
 ---
-name: document-qa
+name: Document QA
 description: Answer questions from local documents and references with citation-friendly excerpts. Use when the user asks for document Q&A, evidence extraction, or source-grounded answers.
+category: task
 ---
 
-# Document QA Workflow
+# Mission
 
 Produce accurate, evidence-based answers grounded in loaded documents.
 
+## Category
+
+`task`
+
+## Use When
+
+- The user asks a question about local files, notes, or loaded references.
+- The answer must be grounded in quoted evidence rather than general knowledge.
+- Evidence extraction, contradiction handling, or citation-friendly excerpts are required.
+
+## Scope
+
+1. Answer from loaded documents and references only.
+2. Preserve file-path and line-level evidence whenever available.
+3. Support multi-document comparison and contradiction handling.
+4. Return explicit confidence and gap notes instead of overclaiming.
+
 ## Core Workflow
 
-1. Parse the user question and identify required evidence types.
+1. Parse the user question and identify the exact evidence needed.
 2. Load only the references required for the question.
 3. For long documents, apply chunking to stay within context limits.
-4. Identify exact passages that support the answer.
-5. Produce a concise answer with cited file paths and line references.
-6. If evidence is missing, state what is missing and what to load next.
+4. Rank sources by authority and recency when multiple documents cover the same topic.
+5. Identify exact supporting passages and separate direct support from inference.
+6. If sources conflict, report both positions and explain the conflict type.
+7. Produce a concise answer with evidence bullets and a confidence note.
+8. If evidence is missing, state what is missing and what to load next.
 
-## Multi-Document Rules
-
-1. When multiple documents cover the same topic, prefer the most recently modified source.
-2. If documents have different authority levels, rank: official spec > internal doc > meeting notes > informal notes.
-3. Cross-reference claims across documents when possible.
-4. When documents contradict each other, apply the conflict resolution procedure below.
-
-## Conflict Resolution
-
-1. Report both sources with file paths and excerpts.
-2. Explain the nature of the conflict (factual, temporal, scope).
-3. Prefer the primary or authoritative source if identifiable.
-4. If unresolvable, present both positions and mark confidence as Low.
-5. Never claim certainty when evidence conflicts.
-
-## Confidence Levels
-
-Assign a confidence level to every answer:
-
-- **High**: answer is directly supported by multiple consistent passages.
-- **Medium**: answer is supported by a single passage or by inference from related passages.
-- **Low**: evidence is partial, conflicting, or requires assumptions.
-- **Insufficient**: cannot answer; state what documents or evidence are needed.
-
-## Output Requirements
+## Output Standard
 
 Every response must include:
 
 1. **Answer section**: concise answer in 1-3 sentences.
 2. **Evidence bullets**: each with file path, line range, and quoted excerpt.
-3. **Confidence note**: one of High / Medium / Low / Insufficient with brief justification.
+3. **Confidence note**: `High`, `Medium`, `Low`, or `Insufficient` with brief justification.
 4. **Gaps section** (when applicable): missing documents or evidence areas.
+
+Confidence rules:
+
+- **High**: directly supported by multiple consistent passages.
+- **Medium**: supported by a single passage or a narrow inference.
+- **Low**: partial or conflicting support.
+- **Insufficient**: cannot answer from the loaded material.
+
+## Integration
+
+1. Use after `obsidian-mcp` when note discovery or narrow file reads are needed first.
+2. Feed outputs into `document-summary`, `report-writing`, or `planning` when the next step is synthesis.
+3. Preserve exact excerpts and confidence notes when downstream skills reuse the answer.
 
 ## Resource Loading
 
-- Pass only the needed `reference_paths` to `run_skill`; these files do not load automatically.
-- Load `references/qa-guidelines.md` for evidence handling and conflict rules.
-- Load `references/chunk-strategy.md` for long document processing.
-- Load `references/citation-format.md` for citation formatting standards.
+Pass only the needed `reference_paths` to `run_skill`; these files do not load automatically.
+
+- Load `references/qa-guidelines.md` when evidence handling or conflict resolution needs stricter rules.
+- Load `references/chunk-strategy.md` when documents are long enough to require sectioning.
+- Load `references/citation-format.md` when the output must follow a strict evidence citation format.

@@ -4,6 +4,7 @@ export interface ListSkillItem {
   id: string;
   name: string;
   description: string;
+  category: "task" | "mcp";
   references: string[];
 }
 
@@ -20,6 +21,7 @@ export async function buildListSkillsResult(skillsRoot: string): Promise<ListSki
       id: manifest.id,
       name: manifest.name,
       description: manifest.description,
+      category: manifest.category,
       references: manifest.references
     }))
     .sort((a, b) => a.id.localeCompare(b.id));

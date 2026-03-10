@@ -1,6 +1,6 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
-import type { LoadedSkill, SkillFrontmatter, SkillManifest } from "../types.js";
+import type { LoadedSkill, SkillCategory, SkillFrontmatter, SkillManifest } from "../types.js";
 import { normalizeToPosix, resolvePathWithinRoot, validateSkillId } from "../security/policy.js";
 
 interface FrontmatterParseResult {
@@ -49,6 +49,7 @@ function parseSimpleYamlFrontmatter(raw: string): FrontmatterParseResult {
 
   const name = values.get("name");
   const description = values.get("description");
+  const category = values.get("category");
 
   if (!name) {
     throw new Error("SKILL.md frontmatter must include 'name'.");
@@ -58,10 +59,19 @@ function parseSimpleYamlFrontmatter(raw: string): FrontmatterParseResult {
     throw new Error("SKILL.md frontmatter must include 'description'.");
   }
 
+  if (!category) {
+    throw new Error("SKILL.md frontmatter must include 'category'.");
+  }
+
+  if (category !== "task" && category !== "mcp") {
+    throw new Error("SKILL.md frontmatter 'category' must be 'task' or 'mcp'.");
+  }
+
   return {
     frontmatter: {
       name,
-      description
+      description,
+      category: category as SkillCategory
     },
     body
   };
@@ -113,6 +123,7 @@ export async function loadSkillManifest(skillsRoot: string, skillId: string): Pr
     skillFilePath,
     name: parsed.frontmatter.name,
     description: parsed.frontmatter.description,
+    category: parsed.frontmatter.category,
     references: await listFilesRecursivelyIfExists(skillRootPath, "references"),
     scripts: await listFilesRecursivelyIfExists(skillRootPath, "scripts"),
     assets: await listFilesRecursivelyIfExists(skillRootPath, "assets")

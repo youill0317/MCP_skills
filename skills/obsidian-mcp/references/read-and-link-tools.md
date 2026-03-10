@@ -1,5 +1,7 @@
 # Read And Link Tools
 
+Load this reference when deciding between read, link, and backlink operations.
+
 ## Covered Tools
 
 - `read_markdown_toc`

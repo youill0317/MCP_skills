@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { listSkillManifests, loadSkill } from "../src/skills/loader.js";
 
@@ -8,83 +10,105 @@ const skillsRoot = path.resolve(process.cwd(), "skills");
 test("loadSkill reads frontmatter and body", async () => {
   const skill = await loadSkill(skillsRoot, "document-qa");
   assert.equal(skill.id, "document-qa");
-  assert.equal(skill.name, "document-qa");
+  assert.equal(skill.name, "Document QA");
+  assert.equal(skill.category, "task");
   assert.ok(skill.description.includes("Answer questions"));
-  assert.ok(skill.body.includes("Document QA Workflow"));
+  assert.ok(skill.body.includes("## Use When"));
 });
 
-test("loadSkill reads report-writer metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "report-writer");
-  assert.equal(skill.id, "report-writer");
-  assert.equal(skill.name, "report-writer");
+test("loadSkill reads report-writing metadata and body", async () => {
+  const skill = await loadSkill(skillsRoot, "report-writing");
+  assert.equal(skill.id, "report-writing");
+  assert.equal(skill.name, "Report Writing");
+  assert.equal(skill.category, "task");
   assert.ok(skill.description.includes("structured reports"));
-  assert.ok(skill.body.includes("Section Standard"));
+  assert.ok(skill.body.includes("## Output Standard"));
 });
 
-test("loadSkill reads plan-skill metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "plan-skill");
-  assert.equal(skill.id, "plan-skill");
-  assert.equal(skill.name, "plan-skill");
+test("loadSkill reads planning metadata and body", async () => {
+  const skill = await loadSkill(skillsRoot, "planning");
+  assert.equal(skill.id, "planning");
+  assert.equal(skill.name, "Planning");
+  assert.equal(skill.category, "task");
   assert.ok(skill.description.includes("decision-complete execution plans"));
-  assert.ok(skill.body.includes("Planning Workflow"));
+  assert.ok(skill.body.includes("## Core Workflow"));
 });
 
-test("loadSkill reads mcp-search metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "mcp-search");
-  assert.equal(skill.id, "mcp-search");
-  assert.equal(skill.name, "mcp-search");
-  assert.ok(skill.description.includes("mcp_search"));
-  assert.ok(skill.body.includes("Tool Families"));
+test("loadSkill reads search-mcp metadata and body", async () => {
+  const skill = await loadSkill(skillsRoot, "search-mcp");
+  assert.equal(skill.id, "search-mcp");
+  assert.equal(skill.name, "Search MCP");
+  assert.equal(skill.category, "mcp");
+  assert.ok(skill.description.includes("individual search MCP servers"));
+  assert.ok(skill.body.includes("## Resource Loading"));
 });
 
-test("loadSkill reads workflow-orchestrator metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "workflow-orchestrator");
-  assert.equal(skill.id, "workflow-orchestrator");
-  assert.equal(skill.name, "workflow-orchestrator");
-  assert.ok(skill.description.includes("multi-skill workflows"));
-  assert.ok(skill.body.includes("Common Chains"));
+test("loadSkill reads obsidian-mcp metadata and body", async () => {
+  const skill = await loadSkill(skillsRoot, "obsidian-mcp");
+  assert.equal(skill.id, "obsidian-mcp");
+  assert.equal(skill.name, "Obsidian MCP");
+  assert.equal(skill.category, "mcp");
+  assert.ok(skill.description.includes("`mcp_obsidian`"));
+  assert.ok(skill.body.includes("## Category"));
 });
 
-test("listSkillManifests returns installed starter skills", async () => {
+test("listSkillManifests returns installed skills with categories", async () => {
   const manifests = await listSkillManifests(skillsRoot);
   const ids = manifests.map((item) => item.id);
   assert.ok(ids.includes("document-qa"));
   assert.ok(ids.includes("document-summary"));
-  assert.ok(ids.includes("mcp-search"));
-  assert.ok(ids.includes("mcp-obsidian"));
-  assert.ok(ids.includes("mcp-skills"));
-  assert.ok(ids.includes("mcp-subagent"));
-  assert.ok(ids.includes("report-writer"));
-  assert.ok(ids.includes("plan-skill"));
-  assert.ok(ids.includes("workflow-orchestrator"));
+  assert.ok(ids.includes("search-mcp"));
+  assert.ok(ids.includes("obsidian-mcp"));
+  assert.ok(ids.includes("report-writing"));
+  assert.ok(ids.includes("planning"));
+  assert.ok(ids.includes("academic-writing"));
+  assert.ok(ids.includes("presentation-design"));
+  assert.ok(ids.includes("problem-definition"));
 
-  const mcpSearch = manifests.find((item) => item.id === "mcp-search");
-  assert.ok(mcpSearch);
-  assert.ok(mcpSearch.references.includes("references/brave.md"));
-  assert.ok(mcpSearch.references.includes("references/scholar.md"));
+  const search = manifests.find((item) => item.id === "search-mcp");
+  assert.ok(search);
+  assert.equal(search.category, "mcp");
+  assert.ok(search.references.includes("references/brave.md"));
+  assert.ok(search.references.includes("references/scholar.md"));
 
-  const mcpObsidian = manifests.find((item) => item.id === "mcp-obsidian");
-  assert.ok(mcpObsidian);
-  assert.ok(mcpObsidian.references.includes("references/read-and-link-tools.md"));
+  const obsidian = manifests.find((item) => item.id === "obsidian-mcp");
+  assert.ok(obsidian);
+  assert.equal(obsidian.category, "mcp");
+  assert.ok(obsidian.references.includes("references/read-and-link-tools.md"));
 
-  const mcpSkills = manifests.find((item) => item.id === "mcp-skills");
-  assert.ok(mcpSkills);
-  assert.ok(mcpSkills.references.includes("references/reference-loading-and-scripts.md"));
+  const reportWriting = manifests.find((item) => item.id === "report-writing");
+  assert.ok(reportWriting);
+  assert.equal(reportWriting.category, "task");
+  assert.ok(reportWriting.references.includes("references/research-report.md"));
 
-  const mcpSubagent = manifests.find((item) => item.id === "mcp-subagent");
-  assert.ok(mcpSubagent);
-  assert.ok(mcpSubagent.references.includes("references/task-writing-guide.md"));
+  const planning = manifests.find((item) => item.id === "planning");
+  assert.ok(planning);
+  assert.equal(planning.category, "task");
+  assert.ok(planning.references.includes("references/plan-template.md"));
+  assert.ok(planning.references.includes("references/decision-rules.md"));
+});
 
-  const reportWriter = manifests.find((item) => item.id === "report-writer");
-  assert.ok(reportWriter);
-  assert.ok(reportWriter.references.includes("references/research-report.md"));
+test("loadSkill rejects skills missing category", async () => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-loader-"));
+  const tempSkillRoot = path.join(tempRoot, "missing-category");
+  await mkdir(tempSkillRoot, { recursive: true });
+  await writeFile(
+    path.join(tempSkillRoot, "SKILL.md"),
+    [
+      "---",
+      "name: Missing Category",
+      "description: Used to verify frontmatter validation.",
+      "---",
+      "",
+      "# Mission",
+      "",
+      "Body"
+    ].join("\n"),
+    "utf8"
+  );
 
-  const planSkill = manifests.find((item) => item.id === "plan-skill");
-  assert.ok(planSkill);
-  assert.ok(planSkill.references.includes("references/plan-template.md"));
-  assert.ok(planSkill.references.includes("references/decision-rules.md"));
-
-  const workflowOrchestrator = manifests.find((item) => item.id === "workflow-orchestrator");
-  assert.ok(workflowOrchestrator);
-  assert.ok(workflowOrchestrator.references.includes("references/chaining-patterns.md"));
+  await assert.rejects(
+    () => loadSkill(tempRoot, "missing-category"),
+    /frontmatter must include 'category'/
+  );
 });

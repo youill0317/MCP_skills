@@ -1,5 +1,7 @@
 # QA Guidelines
 
+Load this reference when the answer must be tightly grounded in document evidence.
+
 ## Evidence Standards
 
 1. Use direct evidence from loaded documents only.

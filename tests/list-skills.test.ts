@@ -17,15 +17,14 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.deepEqual(ids, sorted);
   assert.ok(ids.includes("document-qa"));
   assert.ok(ids.includes("document-summary"));
-  assert.ok(ids.includes("mcp-search"));
-  assert.ok(ids.includes("mcp-obsidian"));
-  assert.ok(ids.includes("mcp-skills"));
-  assert.ok(ids.includes("mcp-subagent"));
-  assert.ok(ids.includes("report-writer"));
-  assert.ok(ids.includes("plan-skill"));
-  assert.ok(ids.includes("workflow-orchestrator"));
+  assert.ok(ids.includes("search-mcp"));
+  assert.ok(ids.includes("obsidian-mcp"));
+  assert.ok(ids.includes("report-writing"));
+  assert.ok(ids.includes("planning"));
+  assert.ok(ids.includes("academic-writing"));
 
   for (const skill of result.skills) {
+    assert.ok(skill.category === "task" || skill.category === "mcp");
     assert.ok(Array.isArray(skill.references));
     for (const referencePath of skill.references) {
       assert.equal(typeof referencePath, "string");
@@ -33,33 +32,28 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
     }
   }
 
-  const mcpSearch = result.skills.find((item) => item.id === "mcp-search");
-  assert.ok(mcpSearch);
-  assert.ok((mcpSearch.references ?? []).includes("references/brave.md"));
-  assert.ok((mcpSearch.references ?? []).includes("references/scholar.md"));
+  const categories = new Set(result.skills.map((item) => item.category));
+  assert.deepEqual(categories, new Set(["task", "mcp"]));
 
-  const mcpObsidian = result.skills.find((item) => item.id === "mcp-obsidian");
-  assert.ok(mcpObsidian);
-  assert.ok((mcpObsidian.references ?? []).includes("references/discovery-and-navigation.md"));
+  const search = result.skills.find((item) => item.id === "search-mcp");
+  assert.ok(search);
+  assert.equal(search.category, "mcp");
+  assert.ok((search.references ?? []).includes("references/brave.md"));
+  assert.ok((search.references ?? []).includes("references/scholar.md"));
 
-  const mcpSkills = result.skills.find((item) => item.id === "mcp-skills");
-  assert.ok(mcpSkills);
-  assert.ok((mcpSkills.references ?? []).includes("references/run-skill-guide.md"));
+  const obsidian = result.skills.find((item) => item.id === "obsidian-mcp");
+  assert.ok(obsidian);
+  assert.equal(obsidian.category, "mcp");
+  assert.ok((obsidian.references ?? []).includes("references/discovery-and-navigation.md"));
 
-  const mcpSubagent = result.skills.find((item) => item.id === "mcp-subagent");
-  assert.ok(mcpSubagent);
-  assert.ok((mcpSubagent.references ?? []).includes("references/delegate-task.md"));
+  const reportWriting = result.skills.find((item) => item.id === "report-writing");
+  assert.ok(reportWriting);
+  assert.equal(reportWriting.category, "task");
+  assert.ok((reportWriting.references ?? []).includes("references/research-report.md"));
 
-  const reportWriter = result.skills.find((item) => item.id === "report-writer");
-  assert.ok(reportWriter);
-  assert.ok((reportWriter.references ?? []).includes("references/research-report.md"));
-
-  const planSkill = result.skills.find((item) => item.id === "plan-skill");
-  assert.ok(planSkill);
-  assert.ok((planSkill.references ?? []).includes("references/plan-template.md"));
-  assert.ok((planSkill.references ?? []).includes("references/decision-rules.md"));
-
-  const workflowOrchestrator = result.skills.find((item) => item.id === "workflow-orchestrator");
-  assert.ok(workflowOrchestrator);
-  assert.ok((workflowOrchestrator.references ?? []).includes("references/chaining-patterns.md"));
+  const planning = result.skills.find((item) => item.id === "planning");
+  assert.ok(planning);
+  assert.equal(planning.category, "task");
+  assert.ok((planning.references ?? []).includes("references/plan-template.md"));
+  assert.ok((planning.references ?? []).includes("references/decision-rules.md"));
 });

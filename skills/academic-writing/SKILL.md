@@ -1,11 +1,22 @@
 ---
-name: paper-writing
+name: Academic Writing
 description: Write and revise academic papers in APA 7 style from outline to final manuscript, including language-adaptive drafting (default Korean, user-requested language override), author-date in-text citations, reference list normalization, and table/figure caption checks. Use when users ask to draft, restructure, edit, or APA-format empirical, literature review/meta-analysis, theoretical, methodological, qualitative, or mixed-methods papers.
+category: task
 ---
 
 # Mission
 
 Produce complete, defensible APA 7 paper drafts with clear structure, traceable claims, and strict citation discipline.
+
+## Category
+
+`task`
+
+## Use When
+
+- The user wants to draft, revise, restructure, or APA-format an academic paper.
+- The deliverable is a manuscript rather than a short report or slide deck.
+- APA 7 structure, citation handling, and table/figure checks are required.
 
 ## Scope
 
@@ -15,38 +26,18 @@ Produce complete, defensible APA 7 paper drafts with clear structure, traceable 
 4. Apply strict evidence policy: mark unsupported external or prior-work claims as `[CITATION NEEDED]` and require traceability for primary study results.
 5. Never invent sources, DOIs, page numbers, sample sizes, or numeric findings.
 
-## Paper Type Selection
-
-Select exactly one primary type and load the matching reference:
-
-1. Empirical paper -> `references/type-empirical.md`
-2. Literature review / meta-analysis -> `references/type-literature-review-meta-analysis.md`
-3. Theoretical paper -> `references/type-theoretical.md`
-4. Methodological paper -> `references/type-methodological.md`
-5. Qualitative paper -> `references/type-qualitative.md`
-6. Mixed-methods paper -> `references/type-mixed-methods.md`
-
-If the user asks for a hybrid design, pick the dominant type and explicitly note where secondary conventions are applied.
-
 ## Core Workflow
 
 1. Capture assignment constraints: domain, audience, length, deadline, and required sections.
 2. Confirm paper type and research question or thesis statement.
-3. Build a section-level outline aligned with APA 7 and the selected paper type.
-4. Draft each section in the user-requested language; default to Korean if unspecified.
-5. Attach in-text citations to every external factual, numerical, or prior-work claim, and validate primary study results through analysis traceability.
-6. Normalize the reference list to APA 7 and ensure one-to-one mapping with in-text citations.
-7. Validate table/figure numbering, titles, and notes.
-8. Run the final quality gate and report remaining issues clearly.
-
-## Strict Citation Policy
-
-1. Do not leave external factual or prior-work claims uncited.
-2. Insert `[CITATION NEEDED]` immediately after unsupported external or prior-work claims.
-3. For primary study results (for example, sample sizes or effect estimates), require analysis traceability rather than forced external citations.
-4. Do not fabricate bibliographic metadata. If data is missing, mark `[MISSING METADATA: field]`.
-5. If source quality is uncertain, flag `[VERIFY SOURCE]`.
-6. Preserve user-provided source identifiers unless they violate APA 7 formatting.
+3. Select exactly one primary paper type and load the matching type guide.
+4. If the request is hybrid, choose the dominant type and note secondary conventions explicitly.
+5. Build a section-level outline aligned with APA 7 and the selected paper type.
+6. Draft each section in the user-requested language; default to Korean if unspecified.
+7. Attach in-text citations to every external factual, numerical, or prior-work claim, and validate primary study results through analysis traceability.
+8. Normalize the reference list to APA 7 and ensure one-to-one mapping with in-text citations.
+9. Validate table/figure numbering, titles, and notes.
+10. Run the final quality gate and report remaining issues clearly.
 
 ## Output Standard
 
@@ -59,11 +50,20 @@ Always return:
 5. Table/Figure caption block if tables or figures are present.
 6. Compliance report: passed checks, failed checks, and actionable fixes.
 
+Citation rules:
+
+1. Do not leave external factual or prior-work claims uncited.
+2. Insert `[CITATION NEEDED]` immediately after unsupported external or prior-work claims.
+3. For primary study results, require analysis traceability rather than forced external citations.
+4. Do not fabricate bibliographic metadata. If data is missing, mark `[MISSING METADATA: field]`.
+5. If source quality is uncertain, flag `[VERIFY SOURCE]`.
+
 ## Integration
 
 1. Work independently by default.
-2. If `mcp-search` or `workflow-orchestrator` output is provided, preserve evidence mappings and confidence notes.
-3. If `report-writer` output is provided, re-structure to APA format without introducing new facts.
+2. If `search-mcp` output is provided, preserve evidence mappings and confidence notes.
+3. If `report-writing` output is provided, re-structure it to APA format without introducing new facts.
+4. Feed finished paper sections into `presentation-design` only after the manuscript structure is stable.
 
 ## Resource Loading
 
@@ -78,4 +78,11 @@ Load common references first:
 - `references/tables-figures-caption-rules.md`
 - `references/final-quality-gate.md`
 
-Then load exactly one type-specific reference from the Paper Type Selection list.
+Then load exactly one type-specific guide:
+
+- `references/type-empirical.md`
+- `references/type-literature-review-meta-analysis.md`
+- `references/type-theoretical.md`
+- `references/type-methodological.md`
+- `references/type-qualitative.md`
+- `references/type-mixed-methods.md`

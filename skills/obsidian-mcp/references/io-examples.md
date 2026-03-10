@@ -1,5 +1,7 @@
 # Representative I/O Patterns
 
+Load this reference when the user needs concrete example calls or output shapes.
+
 ## Discovery Then Read
 
 1. Find candidates with `search_markdown`.

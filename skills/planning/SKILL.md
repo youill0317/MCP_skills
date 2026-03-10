@@ -1,22 +1,24 @@
 ---
-name: plan-skill
+name: Planning
 description: Create decision-complete execution plans for tasks and projects. Use when the user asks for planning, scoping, implementation breakdown, sequencing, risk handling, testing strategy, or acceptance criteria before execution.
+category: task
 ---
 
 # Mission
 
 Produce actionable plans that leave no implementation decisions unresolved.
 
-## Plan Type Selection
+## Category
 
-Select the appropriate type based on the request:
+`task`
 
-- **Implementation Plan**: step-by-step technical execution for a specific feature or change. Default type.
-- **Project Plan**: broader scoping with milestones, dependencies, and resource considerations.
-- **Migration Plan**: phased transition from current state to target state with rollback strategy.
-- **Investigation Plan**: structured approach to diagnose unknowns before committing to implementation.
+## Use When
 
-## Core Rules
+- The user asks for planning before implementation.
+- The task requires sequencing, scope control, testing strategy, or risk handling.
+- Success depends on locking assumptions and decisions before execution starts.
+
+## Scope
 
 1. Define goal, success criteria, and audience.
 2. Separate in-scope and out-of-scope items.
@@ -27,27 +29,17 @@ Select the appropriate type based on the request:
 7. Identify risks and concrete mitigations.
 8. Provide effort estimates when scope is clear enough.
 
-## Planning Workflow
+## Core Workflow
 
 1. Normalize the request into a clear objective statement.
 2. Extract known facts and unknowns.
 3. Resolve discoverable unknowns before planning.
-4. Select the plan type.
+4. Select one plan type: Implementation, Project, Migration, or Investigation.
 5. Lock major technical decisions and defaults.
 6. Draft implementation steps with ownership and order.
 7. Estimate effort per step when feasible.
 8. Define verification scenarios for normal and failure paths.
 9. Finalize assumptions and unresolved questions explicitly.
-
-## Effort Estimation
-
-When providing estimates:
-
-1. Use relative sizing (S/M/L/XL) when absolute time is uncertain.
-2. Call out estimation assumptions explicitly.
-3. Identify high-uncertainty items and flag them.
-4. Separate known work from investigation work.
-5. Include buffer for integration and testing.
 
 ## Output Standard
 
@@ -62,9 +54,24 @@ Always include:
 7. Risks and mitigations
 8. Explicit assumptions/defaults
 
+Estimation rules:
+
+1. Use relative sizing (`S` / `M` / `L` / `XL`) when absolute time is uncertain.
+2. Call out estimation assumptions explicitly.
+3. Flag high-uncertainty items.
+4. Separate known work from investigation work.
+5. Include integration and testing effort.
+
+## Integration
+
+1. Use after `problem-definition` when the core problem still needs to be clarified.
+2. Use outputs from `document-summary`, `document-qa`, or `search-mcp` as discovered facts rather than re-researching them.
+3. Hand completed plans to execution-oriented agents or engineers without leaving key decisions implicit.
+
 ## Resource Loading
 
-- Pass only the needed `reference_paths` to `run_skill`; these files do not load automatically.
-- Load `references/plan-template.md` for the full plan skeleton.
-- Load `references/decision-rules.md` for decision-complete quality checks.
-- Load `references/estimation-guide.md` for effort estimation standards.
+Pass only the needed `reference_paths` to `run_skill`; these files do not load automatically.
+
+- Load `references/plan-template.md` when the plan needs a fuller structured skeleton.
+- Load `references/decision-rules.md` when checking whether the plan is decision-complete.
+- Load `references/estimation-guide.md` when estimates need more rigor.

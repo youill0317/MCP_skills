@@ -1,5 +1,7 @@
 # Estimation Guide
 
+Load this reference when the plan needs explicit sizing or uncertainty handling.
+
 Standards for estimating effort within plans.
 
 ## Sizing Scale

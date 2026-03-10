@@ -1,5 +1,7 @@
 # Discovery And Navigation Tools
 
+Load this reference when choosing search or directory-navigation tools in `mcp_obsidian`.
+
 ## Covered Tools
 
 - `search_markdown`

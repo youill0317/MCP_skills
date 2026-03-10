@@ -1,11 +1,29 @@
 ---
-name: document-summary
+name: Document Summary
 description: Produce structured summaries from local documents and notes. Use when the user asks for concise summaries, executive briefs, or key-point extraction.
+category: task
 ---
 
 # Mission
 
 Extract and organize the essential content of documents into layered, actionable summaries.
+
+## Category
+
+`task`
+
+## Use When
+
+- The user wants a concise summary, executive brief, or key-point extraction.
+- The source material is local documentation, notes, or loaded references.
+- The deliverable should compress content rather than answer a narrow question.
+
+## Scope
+
+1. Summarize loaded documents and notes without inventing facts.
+2. Adjust depth to document length, complexity, and audience.
+3. Preserve important terms, numbers, and uncertainties.
+4. Support multilingual input while keeping critical source terms intact.
 
 ## Core Workflow
 
@@ -13,41 +31,11 @@ Extract and organize the essential content of documents into layered, actionable
 2. Classify document type (technical, narrative, data, mixed).
 3. Identify the main claims, data points, and open questions.
 4. Select summary depth based on user request or document length.
-5. Produce a layered summary following the output structure below.
-6. Add unknowns and follow-up checks when data is incomplete.
+5. Apply a length-aware strategy: direct summary for short files, grouped synthesis for medium files, and section-by-section reduction for long files.
+6. Produce a layered summary following the output structure below.
+7. Add unknowns and follow-up checks when data is incomplete.
 
-## Summary Depth Levels
-
-Choose the appropriate depth:
-
-- **Overview**: 1-line takeaway + 3-5 bullet key points. Best for short documents or quick scans.
-- **Standard**: 1-line takeaway + paragraph summary + detailed key points + unknowns. Default depth.
-- **Detailed**: Full section-by-section breakdown with quoted evidence. For long or complex documents.
-- **Executive**: Decision-focused brief with recommendations and action items. For leadership audiences.
-
-## Document Length Strategy
-
-### Short documents (< 500 words)
-- Summarize directly without chunking.
-- Prioritize completeness over brevity.
-
-### Medium documents (500 - 5,000 words)
-- Read fully, then produce a Standard or Detailed summary.
-- Group content by theme or section.
-
-### Long documents (> 5,000 words)
-- Apply heading-based sectioning.
-- Summarize each section independently, then synthesize.
-- Note which sections were loaded and which were skipped.
-
-## Multilingual Handling
-
-1. Detect the document language and the user's preferred language.
-2. If different, summarize in the user's language while preserving key terms from the original.
-3. Flag any translation-sensitive terms or concepts.
-4. Keep proper nouns and technical terms in their original form.
-
-## Output Structure
+## Output Standard
 
 Every summary must include:
 
@@ -56,14 +44,28 @@ Every summary must include:
 3. **Key points**: bullet list of major claims or data.
 4. **Open questions / unknowns**: gaps, ambiguities, or items needing verification.
 
-For Detailed and Executive depths, add:
+Depth rules:
+
+- **Overview**: 1-line takeaway + 3-5 key points.
+- **Standard**: default format above.
+- **Detailed**: add section-by-section breakdown with source references.
+- **Executive**: add decision-focused action items.
+
+For `Detailed` and `Executive` depths, add:
 
 5. **Section breakdown**: per-section summaries with source references.
 6. **Action items** (Executive only): concrete next steps derived from the content.
 
+## Integration
+
+1. Use after `document-qa` when question-specific evidence has already been collected.
+2. Feed summaries into `report-writing`, `presentation-design`, or `planning` when a more structured deliverable is needed next.
+3. Preserve translation-sensitive terms and open questions for downstream skills.
+
 ## Resource Loading
 
-- Pass only the needed `reference_paths` to `run_skill`; these files do not load automatically.
-- Load `references/summary-style.md` for style and formatting rules.
-- Load `references/summary-template.md` for output structure templates.
-- Load `references/extraction-rules.md` for key-point extraction criteria.
+Pass only the needed `reference_paths` to `run_skill`; these files do not load automatically.
+
+- Load `references/summary-style.md` when style or brevity needs tighter control.
+- Load `references/summary-template.md` when the output must follow a fixed structure.
+- Load `references/extraction-rules.md` when deciding what counts as a key point is non-trivial.

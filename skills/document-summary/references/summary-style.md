@@ -1,5 +1,7 @@
 # Summary Style
 
+Load this reference when the summary needs stricter wording, density, or formatting control.
+
 ## Content Rules
 
 - Prioritize facts over opinions.

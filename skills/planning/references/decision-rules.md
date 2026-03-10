@@ -1,5 +1,7 @@
 # Decision Rules
 
+Load this reference when checking whether a plan is complete enough to hand off directly.
+
 Apply these checks before finalizing a plan.
 
 ## Decision-Complete Gate
