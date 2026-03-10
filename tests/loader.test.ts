@@ -40,6 +40,15 @@ test("loadSkill reads search-mcp metadata and body", async () => {
   assert.equal(skill.name, "Search MCP");
   assert.equal(skill.category, "mcp");
   assert.ok(skill.description.includes("individual search MCP servers"));
+  assert.ok(skill.body.includes("provider/tool selection"));
+});
+
+test("loadSkill reads research-strategy metadata and body", async () => {
+  const skill = await loadSkill(skillsRoot, "research-strategy");
+  assert.equal(skill.id, "research-strategy");
+  assert.equal(skill.name, "Research Strategy");
+  assert.equal(skill.category, "task");
+  assert.ok(skill.description.includes("web research"));
   assert.ok(skill.body.includes("## Resource Loading"));
 });
 
@@ -58,6 +67,7 @@ test("listSkillManifests returns installed skills with categories", async () => 
   assert.ok(ids.includes("document-qa"));
   assert.ok(ids.includes("document-summary"));
   assert.ok(ids.includes("search-mcp"));
+  assert.ok(ids.includes("research-strategy"));
   assert.ok(ids.includes("obsidian-mcp"));
   assert.ok(ids.includes("report-writing"));
   assert.ok(ids.includes("planning"));
@@ -70,6 +80,14 @@ test("listSkillManifests returns installed skills with categories", async () => 
   assert.equal(search.category, "mcp");
   assert.ok(search.references.includes("references/brave.md"));
   assert.ok(search.references.includes("references/scholar.md"));
+  assert.ok(!search.references.includes("references/quick-search-mode.md"));
+  assert.ok(!search.references.includes("references/deep-research-mode.md"));
+
+  const researchStrategy = manifests.find((item) => item.id === "research-strategy");
+  assert.ok(researchStrategy);
+  assert.equal(researchStrategy.category, "task");
+  assert.ok(researchStrategy.references.includes("references/quick-search-mode.md"));
+  assert.ok(researchStrategy.references.includes("references/deep-research-mode.md"));
 
   const obsidian = manifests.find((item) => item.id === "obsidian-mcp");
   assert.ok(obsidian);

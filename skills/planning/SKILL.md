@@ -65,8 +65,9 @@ Estimation rules:
 ## Integration
 
 1. Use after `problem-definition` when the core problem still needs to be clarified.
-2. Use outputs from `document-summary`, `document-qa`, or `search-mcp` as discovered facts rather than re-researching them.
-3. Hand completed plans to execution-oriented agents or engineers without leaving key decisions implicit.
+2. Use outputs from `document-summary`, `document-qa`, or `research-strategy` as discovered facts rather than re-researching them.
+3. Use `search-mcp` only when the plan depends on unresolved provider/tool selection.
+4. Hand completed plans to execution-oriented agents or engineers without leaving key decisions implicit.
 
 ## Resource Loading
 

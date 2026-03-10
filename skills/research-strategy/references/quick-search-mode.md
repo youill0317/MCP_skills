@@ -1,5 +1,7 @@
 # Quick Search Mode
 
+Load this reference when the task needs a fast, synthesis-first external research pass.
+
 This reference defines the preferred approach for simple or high-level external queries. It prioritizes speed, breadth, and synthesis over exhaustive depth.
 
 ## Trigger Conditions

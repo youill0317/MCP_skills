@@ -18,6 +18,7 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.ok(ids.includes("document-qa"));
   assert.ok(ids.includes("document-summary"));
   assert.ok(ids.includes("search-mcp"));
+  assert.ok(ids.includes("research-strategy"));
   assert.ok(ids.includes("obsidian-mcp"));
   assert.ok(ids.includes("report-writing"));
   assert.ok(ids.includes("planning"));
@@ -40,6 +41,14 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.equal(search.category, "mcp");
   assert.ok((search.references ?? []).includes("references/brave.md"));
   assert.ok((search.references ?? []).includes("references/scholar.md"));
+  assert.ok(!(search.references ?? []).includes("references/quick-search-mode.md"));
+  assert.ok(!(search.references ?? []).includes("references/deep-research-mode.md"));
+
+  const researchStrategy = result.skills.find((item) => item.id === "research-strategy");
+  assert.ok(researchStrategy);
+  assert.equal(researchStrategy.category, "task");
+  assert.ok((researchStrategy.references ?? []).includes("references/quick-search-mode.md"));
+  assert.ok((researchStrategy.references ?? []).includes("references/deep-research-mode.md"));
 
   const obsidian = result.skills.find((item) => item.id === "obsidian-mcp");
   assert.ok(obsidian);

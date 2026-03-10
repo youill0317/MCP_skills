@@ -1,5 +1,7 @@
 # Deep Research Mode
 
+Load this reference when the task needs exhaustive, contradiction-aware, multi-pass external research.
+
 Mission: exhaustive information gathering through aggressive, multi-provider search.
 
 ## Core Protocol

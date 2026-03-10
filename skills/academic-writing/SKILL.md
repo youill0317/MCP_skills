@@ -61,9 +61,10 @@ Citation rules:
 ## Integration
 
 1. Work independently by default.
-2. If `search-mcp` output is provided, preserve evidence mappings and confidence notes.
-3. If `report-writing` output is provided, re-structure it to APA format without introducing new facts.
-4. Feed finished paper sections into `presentation-design` only after the manuscript structure is stable.
+2. If `research-strategy` output is provided, preserve evidence mappings and confidence notes.
+3. Use `search-mcp` only when provider/tool selection guidance is needed during evidence gathering.
+4. If `report-writing` output is provided, re-structure it to APA format without introducing new facts.
+5. Feed finished paper sections into `presentation-design` only after the manuscript structure is stable.
 
 ## Resource Loading
 

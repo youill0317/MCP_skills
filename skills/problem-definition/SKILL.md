@@ -65,8 +65,9 @@ Integrity tags:
 ## Integration
 
 1. Use before `planning` when the solution path should not be locked yet.
-2. Use `search-mcp` or `document-qa` afterwards if the validation questions require evidence gathering.
-3. Preserve assumptions, blind spots, and next-investigation tasks in downstream planning outputs.
+2. Use `research-strategy` or `document-qa` afterwards if the validation questions require evidence gathering.
+3. Use `search-mcp` only if the evidence-gathering path is blocked on provider/tool selection.
+4. Preserve assumptions, blind spots, and next-investigation tasks in downstream planning outputs.
 
 ## Resource Loading
 

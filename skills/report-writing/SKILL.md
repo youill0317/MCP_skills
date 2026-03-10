@@ -21,7 +21,7 @@ Transform research outputs into clear, decision-ready reports.
 ## Scope
 
 1. Perform report writing only.
-2. Assume investigation was already completed (for example by `search-mcp` or `document-summary`).
+2. Assume investigation was already completed (for example by `research-strategy` or `document-summary`).
 3. If critical evidence is missing, do not invent facts. Record gaps and request follow-up research items.
 
 ## Core Workflow
@@ -45,10 +45,11 @@ Transform research outputs into clear, decision-ready reports.
 
 ## Integration
 
-1. Accept outputs from `search-mcp`, `document-summary`, or `document-qa` and preserve their citation markers.
-2. Use confidence labels from upstream research outputs to calibrate language strength.
-3. Carry forward unresolved contradictions into the report's limitations section.
-4. Hand finished reports to `presentation-design` or `academic-writing` without adding new facts during handoff.
+1. Accept outputs from `research-strategy`, `document-summary`, or `document-qa` and preserve their citation markers.
+2. Use `search-mcp` only when extra provider/tool guidance is needed before more research.
+3. Use confidence labels from upstream research outputs to calibrate language strength.
+4. Carry forward unresolved contradictions into the report's limitations section.
+5. Hand finished reports to `presentation-design` or `academic-writing` without adding new facts during handoff.
 
 ## Resource Loading
 
