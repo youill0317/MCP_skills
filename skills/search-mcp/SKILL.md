@@ -1,6 +1,6 @@
 ---
 name: Search MCP
-description: Guide for choosing and using individual search MCP servers. Use when users ask how to choose, parameterize, or combine Exa, Tavily, Brave, or Semantic Scholar/Asta MCP tools, or when provider/tool selection is the main problem.
+description: Guide for choosing and using individual search MCP servers while coordinating them with built-in web search. Use when users ask how to choose, parameterize, or combine Exa, Tavily, Brave, or Semantic Scholar/Asta MCP tools, especially when tool-stack selection is the main problem.
 category: mcp
 ---
 
@@ -16,7 +16,7 @@ Choose and parameterize search MCP providers accurately, while coordinating them
 
 - The main problem is choosing or parameterizing a search MCP provider.
 - The user needs guidance on combining Exa, Tavily, Brave, or Semantic Scholar/Asta.
-- The task is blocked on tool choice, query shape, or provider-specific capabilities.
+- The task is blocked on tool choice, query shape, provider-specific capabilities, or built-in/MCP role split.
 
 ## Scope
 
@@ -32,24 +32,24 @@ Choose and parameterize search MCP providers accurately, while coordinating them
 1. Identify whether the task needs general web search, semantic discovery, paper workflows, or recency-heavy lookup.
 2. Decide search stack first: built-in web search only, MCP only, or hybrid.
 3. Choose the smallest provider that matches the retrieval need before combining providers.
-3. Constrain by date, domain, topic, or identifier whenever the task allows it.
-4. Recommend extraction or crawl tools only after search-style discovery is insufficient.
-5. Use `mcp_scholar` for paper metadata, citations, references, author lookups, and recommendation flows.
-6. Because official MCP tool names can vary by provider release, inspect the connected tool list before relying on an exact tool name.
-7. Load only the provider reference files needed for the current task.
+4. Constrain by date, domain, topic, or identifier whenever the task allows it.
+5. Recommend extraction or crawl tools only after search-style discovery is insufficient.
+6. Use `mcp_scholar` for paper metadata, citations, references, author lookups, and recommendation flows.
+7. Because official MCP tool names can vary by provider release, inspect the connected tool list before relying on an exact tool name.
+8. Load only the provider reference files needed for the current task.
 
 Hybrid rules:
 
-- Use built-in web search for fast discovery, broad recall checks, or when MCP availability is limited.
+- Use built-in web search for fast discovery and broad recall checks when built-in search is available.
 - Use MCP tools for provider-specific strengths (semantic relatedness, structured extraction/crawl, citation graphs, news/image/video verticals).
-- Use hybrid by default when the task needs both speed and higher-confidence verification.
+- Prefer hybrid when the task needs both speed and higher-confidence verification and both tool classes are available.
 - Avoid duplicate retrieval passes unless they serve verification, freshness, or contradiction resolution.
 
 ## Output Standard
 
 Return guidance that includes:
 
-1. Recommended provider and tool family.
+1. Recommended search stack (built-in only, MCP only, or hybrid) and tool family.
 2. Why that provider fits better than the alternatives.
 3. Important parameter choices or narrowing controls.
 4. Whether built-in web search should be used (and at which step).
