@@ -28,12 +28,13 @@ Run external research workflows that balance speed, coverage, and verification w
 ## Core Workflow
 
 1. Classify the request as quick research, deep research, or a bounded custom variant.
-2. Break the task into the smallest set of answerable sub-questions.
-3. Decide what needs breadth, what needs verification, and what needs freshness checks.
-4. Use `search-mcp` whenever provider choice, tool family, or provider-specific parameterization is unclear.
-5. Run retrieval in passes: discovery, focused verification, and contradiction handling as needed.
-6. Separate confirmed findings, open questions, and unresolved conflicts.
-7. Return research output that downstream task skills can consume without re-running the same search logic.
+2. Identify whether the domain playbook should be literature search, news search, or general web.
+3. Break the task into the smallest set of answerable sub-questions.
+4. Decide what needs breadth, what needs verification, and what needs freshness checks.
+5. Use `search-mcp` whenever provider choice, tool family, or provider-specific parameterization is unclear.
+6. Run retrieval in passes: discovery, focused verification, and contradiction handling as needed.
+7. Separate confirmed findings, open questions, and unresolved conflicts.
+8. Return research output that downstream task skills can consume without re-running the same search logic.
 
 ## Output Standard
 
@@ -60,3 +61,5 @@ Research rules:
 
 - Load `references/quick-search-mode.md` when the task needs a fast, synthesis-first research pass.
 - Load `references/deep-research-mode.md` when the task needs exhaustive, verification-heavy investigation.
+- Load `references/literature-search-playbook.md` when the user needs paper-centric or citation-aware literature research.
+- Load `references/news-search-playbook.md` when the user needs recency-sensitive news tracking or claim verification.
