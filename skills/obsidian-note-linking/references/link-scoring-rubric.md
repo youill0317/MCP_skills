@@ -34,13 +34,19 @@ Use this rubric to rank candidate notes for Obsidian connection proposals.
    - 1: Partially aligned with policy
    - 2: Fully aligned with active vault policy
 
+7. **Sequence continuity**
+   - 0: No usable previous/next relation
+   - 1: Partial sequence relation (only prev or next)
+   - 2: Clear prev/next and hierarchical relation when applicable
+
 ## Ranking Guidance
 
 - Default priority: total score descending.
 - Tie-breakers:
   1. recency relevance (if user cares about current state),
   2. note specificity (prefer focused notes over generic hubs),
-  3. backlink benefit (fills obvious graph gaps).
+  3. sequence continuity (prefer candidates that preserve ordered track),
+  4. backlink benefit (fills obvious graph gaps).
 
 ## Connection Type Selection
 

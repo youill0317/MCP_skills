@@ -66,7 +66,7 @@ test("loadSkill reads obsidian-note-linking metadata and body", async () => {
   assert.equal(skill.id, "obsidian-note-linking");
   assert.equal(skill.name, "Obsidian Note Linking");
   assert.equal(skill.category, "task");
-  assert.ok(skill.description.includes("consistent connection patterns"));
+  assert.ok(skill.description.includes("numeric filename prefixes"));
   assert.ok(skill.body.includes("## Output Standard"));
 });
 
@@ -115,6 +115,7 @@ test("listSkillManifests returns installed skills with categories", async () => 
   assert.ok(obsidianNoteLinking.references.includes("references/link-scoring-rubric.md"));
   assert.ok(obsidianNoteLinking.references.includes("references/output-template.md"));
   assert.ok(obsidianNoteLinking.references.includes("references/consistency-policy.md"));
+  assert.ok(obsidianNoteLinking.references.includes("references/sequence-linking.md"));
 
   const planning = manifests.find((item) => item.id === "planning");
   assert.ok(planning);
