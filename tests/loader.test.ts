@@ -113,6 +113,7 @@ test("listSkillManifests returns installed skills with categories", async () => 
   assert.ok(ids.includes("problem-definition"));
   assert.ok(ids.includes("pdf-markdown-remediation"));
   assert.ok(ids.includes("markdown-format-normalization"));
+  assert.ok(ids.includes("note-exam-prep"));
 
   const search = manifests.find((item) => item.id === "search-mcp");
   assert.ok(search);
@@ -166,6 +167,14 @@ test("listSkillManifests returns installed skills with categories", async () => 
   assert.ok(markdownNormalization.references.includes("references/normalization-rules.md"));
   assert.ok(markdownNormalization.references.includes("references/heading-list-table-rules.md"));
   assert.ok(markdownNormalization.references.includes("references/output-examples.md"));
+
+  const noteExamPrep = manifests.find((item) => item.id === "note-exam-prep");
+  assert.ok(noteExamPrep);
+  assert.equal(noteExamPrep.category, "task");
+  assert.ok(noteExamPrep.references.includes("references/coverage-and-allocation.md"));
+  assert.ok(noteExamPrep.references.includes("references/question-construction.md"));
+  assert.ok(noteExamPrep.references.includes("references/output-contract.md"));
+  assert.ok(noteExamPrep.references.includes("references/quality-gate.md"));
 });
 
 test("loadSkill rejects skills missing category", async () => {

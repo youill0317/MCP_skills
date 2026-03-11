@@ -25,6 +25,7 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.ok(ids.includes("academic-writing"));
   assert.ok(ids.includes("pdf-markdown-remediation"));
   assert.ok(ids.includes("markdown-format-normalization"));
+  assert.ok(ids.includes("note-exam-prep"));
 
   for (const skill of result.skills) {
     assert.ok(skill.category === "task" || skill.category === "mcp");
@@ -82,4 +83,12 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.equal(markdownNormalization.category, "task");
   assert.ok((markdownNormalization.references ?? []).includes("references/normalization-rules.md"));
   assert.ok((markdownNormalization.references ?? []).includes("references/frontmatter-and-tags.md"));
+
+  const noteExamPrep = result.skills.find((item) => item.id === "note-exam-prep");
+  assert.ok(noteExamPrep);
+  assert.equal(noteExamPrep.category, "task");
+  assert.ok((noteExamPrep.references ?? []).includes("references/coverage-and-allocation.md"));
+  assert.ok((noteExamPrep.references ?? []).includes("references/question-construction.md"));
+  assert.ok((noteExamPrep.references ?? []).includes("references/output-contract.md"));
+  assert.ok((noteExamPrep.references ?? []).includes("references/quality-gate.md"));
 });
