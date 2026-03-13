@@ -1,16 +1,11 @@
 ---
-name: Note Exam Prep
+name: note-exam-prep
 description: Generate exam-prep practice sets from the current note/page or pasted note content. Use when the user wants objective multiple-choice and fill-in-the-blank questions that comprehensively cover all material in the current note, with each question followed by a collapsible answer-and-explanation block.
-category: task
 ---
 
 # Mission
 
 Turn the full content of a note into a complete exam-prep practice set without skipping any meaningful material.
-
-## Category
-
-`task`
 
 ## Use When
 

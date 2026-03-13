@@ -1,22 +1,17 @@
 ---
-name: Document Summary
-description: Produce structured summaries from local documents and notes. Use when the user asks for concise summaries, executive briefs, or key-point extraction.
-category: task
+name: document-summary
+description: Produce memo-style key summaries from local documents and notes. Use when the user asks for concise summaries, memo-style key summary, quick key understanding, or key-point extraction. Focus on compressing source content for quick understanding, not on writing formal reports or executive briefs.
 ---
 
 # Mission
 
-Extract and organize the essential content of documents into layered, actionable summaries.
-
-## Category
-
-`task`
+Compress documents and notes into quickly digestible, memo-style key summaries.
 
 ## Use When
 
-- The user wants a concise summary, executive brief, or key-point extraction.
+- The user wants a concise summary, memo-style key summary, quick key understanding, or key-point extraction.
 - The source material is local documentation, notes, or loaded references.
-- The deliverable should compress content rather than answer a narrow question.
+- The deliverable should compress source content for fast understanding rather than become a formal report.
 
 ## Scope
 
@@ -24,7 +19,8 @@ Extract and organize the essential content of documents into layered, actionable
 2. Adjust depth to document length, complexity, and audience.
 3. Preserve important terms, numbers, and uncertainties.
 4. Support multilingual input while keeping critical source terms intact.
-5. Switch to domain-specific summary formats when the document type requires a fixed reporting structure.
+5. Switch to domain-specific summary formats when the document type requires a fixed summary structure.
+6. Do not turn the output into a formal report, executive brief, or fixed-section report deliverable.
 
 ## Core Workflow
 
@@ -42,35 +38,35 @@ Extract and organize the essential content of documents into layered, actionable
 5. Otherwise, use the generic summary path and identify the main claims, data points, and open questions.
 6. Select summary depth based on user request or document length.
 7. Apply a length-aware strategy: direct summary for short files, grouped synthesis for medium files, and section-by-section reduction for long files.
-8. Produce a layered summary following the output structure below, unless a domain-specific reference overrides it.
+8. Produce a memo-style summary following the output structure below, unless a domain-specific reference overrides it.
 9. Add unknowns and follow-up checks when data is incomplete.
 
 ## Output Standard
 
-Generic fallback summaries must include:
+Generic fallback summaries must default to a memo-style structure:
 
 1. **1-line takeaway**: the single most important conclusion.
-2. **Summary paragraph**: 3-5 sentences covering scope, findings, and implications.
-3. **Key points**: bullet list of major claims or data.
-4. **Open questions / unknowns**: gaps, ambiguities, or items needing verification.
+2. **Key points**: bullet list of major claims or data.
+3. **Open questions / unknowns**: gaps, ambiguities, or items needing verification.
+4. **Optional summary paragraph**: add only when a short narrative bridge improves readability.
 
 Depth rules:
 
 - **Overview**: 1-line takeaway + 3-5 key points.
-- **Standard**: default format above.
+- **Standard**: default memo-style format above.
 - **Detailed**: add section-by-section breakdown with source references.
-- **Executive**: add decision-focused action items.
+- **Decision Memo**: add decision-focused action items without converting the output into a full report.
 
-For `Detailed` and `Executive` depths, add:
+For `Detailed` and `Decision Memo` depths, add:
 
 5. **Section breakdown**: per-section summaries with source references.
-6. **Action items** (Executive only): concrete next steps derived from the content.
+6. **Action items** (`Decision Memo` only): concrete next steps derived from the content.
 
 Domain-specific override rules:
 
-- When the source matches a domain-specific reference, the fixed Korean section headers in that reference replace the generic summary paragraph format.
-- Keep the generic `Overview`, `Standard`, `Detailed`, and `Executive` depth rules only for the fallback path or when a user explicitly requests hybrid detail.
-- If metadata, dates, numbers, sample sizes, actors, or source details are missing in the document, state `확인 필요` rather than inferring them.
+- When the source matches a domain-specific reference, the fixed Korean section headers in that reference replace the generic memo-style format.
+- Keep the generic `Overview`, `Standard`, `Detailed`, and `Decision Memo` depth rules only for the fallback path or when a user explicitly requests hybrid detail.
+- If metadata, dates, numbers, sample sizes, actors, or source details are missing in the document, state `check needed` rather than inferring them.
 
 Domain-specific mappings:
 
@@ -85,8 +81,9 @@ Domain-specific mappings:
 ## Integration
 
 1. Use after `document-qa` when question-specific evidence has already been collected.
-2. Feed summaries into `report-writing`, `presentation-design`, or `planning` when a more structured deliverable is needed next.
-3. Preserve translation-sensitive terms and open questions for downstream skills.
+2. Hand off memo-style summaries to `report-writing` when the next step is a structured report or executive brief.
+3. Feed summaries into `presentation-design` when the next step is slide synthesis rather than report writing.
+4. Preserve translation-sensitive terms and open questions for downstream skills.
 
 ## Resource Loading
 
@@ -95,7 +92,7 @@ Pass only the needed `reference_paths` to `run_skill`; these files do not load a
 - Load `references/summary-style.md` when style or brevity needs tighter control.
 - Load `references/summary-template.md` when the output should use the generic fallback structure.
 - Load `references/extraction-rules.md` when deciding what counts as a key point is non-trivial.
-- Load `references/academic-paper-summary.md` when the source is an academic paper and the output should follow the paper-summary report format in Korean.
+- Load `references/academic-paper-summary.md` when the source is an academic paper and the output should follow the paper-summary format in Korean.
 - Load `references/technical-summary.md` when the source is a technical document, API guide, or architecture/procedure note.
 - Load `references/business-summary.md` when the source is a strategy memo, market review, or business performance document.
 - Load `references/policy-legal-summary.md` when the source is a policy, regulation, law, case-related summary, or administrative guidance.

@@ -1,16 +1,11 @@
 ---
-name: MarkItDown MCP
+name: markitdown-mcp
 description: Guide for choosing, setting up, and parameterizing MarkItDown or `markitdown-mcp` when the main problem is MCP-side document or URL to Markdown conversion setup rather than task execution, cleanup, or source-aligned repair.
-category: mcp
 ---
 
 # Mission
 
 Choose and parameterize MarkItDown MCP workflows accurately for document or URL to Markdown conversion, while keeping setup questions separate from conversion execution, normalization, and source-aligned repair.
-
-## Category
-
-`mcp`
 
 ## Use When
 

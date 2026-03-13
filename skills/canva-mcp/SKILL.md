@@ -1,16 +1,11 @@
 ---
-name: Canva MCP
+name: canva-mcp
 description: Guide for the official Canva MCP connector and its tools. Use when users ask how to search Canva designs or folders, resolve Canva links, generate or import designs, choose brand kits or assets, export content, manage comments, perform page-level Canva operations, or hand off finished Canva work as a web link plus a short local Markdown design report, especially when the main blocker is tool selection or parameterization rather than writing the content itself.
-category: mcp
 ---
 
 # Mission
 
 Choose and parameterize Canva MCP workflows accurately, while keeping Canva tool-usage guidance separate from the underlying writing, slide-planning, or design-content task.
-
-## Category
-
-`mcp`
 
 ## Use When
 
@@ -66,7 +61,7 @@ Current tool families in this workspace:
 
 ## Integration
 
-1. Use after `presentation-design`, `report-writing`, or other content-planning skills when the narrative is ready and the blocker is Canva execution.
+1. Use after `presentation-design`, `design-brief`, `report-writing`, or other content-planning skills when the narrative or asset brief is ready and the blocker is Canva execution.
 2. Use before writing-heavy skills only when the real problem is Canva ID discovery, asset handling, or export mechanics.
 3. Hand off content briefs to `generate-design` rather than turning this skill into a long-form writing skill.
 4. Preserve the distinction between read-only retrieval and structural modification.

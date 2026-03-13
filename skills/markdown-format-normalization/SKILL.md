@@ -1,16 +1,11 @@
 ---
-name: Markdown Format Normalization
+name: markdown-format-normalization
 description: Normalize messy existing Markdown into a consistent, readable structure without changing meaning. Use when headings, lists, tables, frontmatter, callouts, spacing, or general Markdown formatting are inconsistent or damaged.
-category: task
 ---
 
 # Mission
 
 Normalize existing Markdown into a clean, consistent, readable document without rewriting its meaning.
-
-## Category
-
-`task`
 
 ## Use When
 

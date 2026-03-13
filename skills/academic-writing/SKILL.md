@@ -1,16 +1,11 @@
 ---
-name: Academic Writing
+name: academic-writing
 description: Write and revise academic papers in APA 7 style from outline to final manuscript, including language-adaptive drafting (default Korean, user-requested language override), author-date in-text citations, reference list normalization, and table/figure caption checks. Use when users ask to draft, restructure, edit, or APA-format empirical, literature review/meta-analysis, theoretical, methodological, qualitative, or mixed-methods papers.
-category: task
 ---
 
 # Mission
 
 Produce complete, defensible APA 7 paper drafts with clear structure, traceable claims, and strict citation discipline.
-
-## Category
-
-`task`
 
 ## Use When
 

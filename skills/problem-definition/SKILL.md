@@ -1,16 +1,11 @@
 ---
-name: Problem Definition
+name: problem-definition
 description: Define and stress-test problems before solution planning. Use when users ask to clarify a problem statement, separate symptoms from root causes, test assumptions, detect blind spots, or verify whether a project/product or research problem is framed correctly. Return a diagnostic packet and MCP-ready JSON.
-category: task
 ---
 
 # Mission
 
 Turn ambiguous concerns into clear, testable problem definitions.
-
-## Category
-
-`task`
 
 ## Use When
 
@@ -64,10 +59,10 @@ Integrity tags:
 
 ## Integration
 
-1. Use before `planning` when the solution path should not be locked yet.
+1. Use before the solution path should be locked when the problem still needs clarification.
 2. Use `research-strategy` or `document-qa` afterwards if the validation questions require evidence gathering.
 3. Use `search-mcp` only if the evidence-gathering path is blocked on provider/tool selection.
-4. Preserve assumptions, blind spots, and next-investigation tasks in downstream planning outputs.
+4. Preserve assumptions, blind spots, and next-investigation tasks in downstream outputs.
 
 ## Resource Loading
 

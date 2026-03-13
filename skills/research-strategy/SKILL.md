@@ -1,16 +1,11 @@
 ---
-name: Research Strategy
+name: research-strategy
 description: Plan and run external research workflows using quick-search and deep-research strategies. Use when users ask for web research, claim verification, source comparison, evidence gathering, or a choice between fast coverage and exhaustive investigation.
-category: task
 ---
 
 # Mission
 
 Run external research workflows that balance speed, coverage, and verification across built-in web search and external tools without confusing strategy with provider-specific tool guidance.
-
-## Category
-
-`task`
 
 ## Use When
 
@@ -58,7 +53,7 @@ Research rules:
 ## Integration
 
 1. Use `search-mcp` when provider/tool choice is the blocker, especially in hybrid plans.
-2. Feed completed findings into `report-writing`, `planning`, `presentation-design`, or `academic-writing`.
+2. Feed completed findings into `report-writing`, `presentation-design`, or `academic-writing`.
 3. Use with `problem-definition` when validation questions require external evidence.
 
 ## Resource Loading

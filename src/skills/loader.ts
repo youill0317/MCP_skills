@@ -1,6 +1,6 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
-import type { LoadedSkill, SkillCategory, SkillFrontmatter, SkillManifest } from "../types.js";
+import type { LoadedSkill, SkillFrontmatter, SkillManifest } from "../types.js";
 import { normalizeToPosix, resolvePathWithinRoot, validateSkillId } from "../security/policy.js";
 
 interface FrontmatterParseResult {
@@ -49,7 +49,6 @@ function parseSimpleYamlFrontmatter(raw: string): FrontmatterParseResult {
 
   const name = values.get("name");
   const description = values.get("description");
-  const category = values.get("category");
 
   if (!name) {
     throw new Error("SKILL.md frontmatter must include 'name'.");
@@ -59,22 +58,27 @@ function parseSimpleYamlFrontmatter(raw: string): FrontmatterParseResult {
     throw new Error("SKILL.md frontmatter must include 'description'.");
   }
 
-  if (!category) {
-    throw new Error("SKILL.md frontmatter must include 'category'.");
-  }
-
-  if (category !== "task" && category !== "mcp") {
-    throw new Error("SKILL.md frontmatter 'category' must be 'task' or 'mcp'.");
+  if (values.has("category")) {
+    throw new Error("SKILL.md frontmatter must not include 'category'.");
   }
 
   return {
     frontmatter: {
       name,
-      description,
-      category: category as SkillCategory
+      description
     },
     body
   };
+}
+
+function validateSkillFrontmatter(frontmatter: SkillFrontmatter, skillId: string): void {
+  if (!validateSkillId(frontmatter.name)) {
+    throw new Error("SKILL.md frontmatter 'name' must use lowercase letters, numbers, and hyphens only.");
+  }
+
+  if (frontmatter.name !== skillId) {
+    throw new Error(`SKILL.md frontmatter 'name' must match folder id '${skillId}'.`);
+  }
 }
 
 async function listFilesRecursivelyIfExists(rootPath: string, subFolder: string): Promise<string[]> {
@@ -116,6 +120,7 @@ export async function loadSkillManifest(skillsRoot: string, skillId: string): Pr
   const skillFilePath = path.resolve(skillRootPath, "SKILL.md");
   const rawSkillFile = await readFile(skillFilePath, "utf8");
   const parsed = parseSimpleYamlFrontmatter(rawSkillFile);
+  validateSkillFrontmatter(parsed.frontmatter, skillId);
 
   return {
     id: skillId,
@@ -123,7 +128,6 @@ export async function loadSkillManifest(skillsRoot: string, skillId: string): Pr
     skillFilePath,
     name: parsed.frontmatter.name,
     description: parsed.frontmatter.description,
-    category: parsed.frontmatter.category,
     references: await listFilesRecursivelyIfExists(skillRootPath, "references"),
     scripts: await listFilesRecursivelyIfExists(skillRootPath, "scripts"),
     assets: await listFilesRecursivelyIfExists(skillRootPath, "assets")

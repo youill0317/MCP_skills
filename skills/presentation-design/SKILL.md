@@ -1,16 +1,11 @@
 ---
-name: Presentation Design
+name: presentation-design
 description: Design visual presentation decks and slide-by-slide narratives in a tool-neutral way. Use when users ask for PPT or slide deck planning, pitch deck structure, lecture presentation flow, visual hierarchy, chart planning, or speaker notes. Focus on what to present and how to visualize it, not software-specific instructions.
-category: task
 ---
 
 # Mission
 
 Produce audience-fit presentation specs with clear narrative flow, slide-level messages, and actionable visualization guidance.
-
-## Category
-
-`task`
 
 ## Use When
 
@@ -64,6 +59,7 @@ Integrity tags:
 3. If `report-writing` output is provided, convert section findings into slide narrative without adding facts.
 4. If `academic-writing` output is provided, condense paper sections into audience-fit slide messages.
 5. Use after `document-summary` when the source material is long and first needs compression.
+6. Use `design-brief` instead when the request is for posters, flyers, card-news, banners, or other non-slide visual assets.
 
 ## Resource Loading
 

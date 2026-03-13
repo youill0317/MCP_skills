@@ -1,16 +1,11 @@
 ---
-name: Pdf Markdown Remediation
+name: pdf-markdown-remediation
 description: Repair Markdown that is broken, incomplete, or misaligned with its source. Use when OCR errors, dropped sections, paragraph collapse, table or list damage, or conversion mismatches must be reconciled against the original file when available, with fallback comparison against auxiliary extracts when needed.
-category: task
 ---
 
 # Mission
 
 Repair Markdown against the source of truth so the document becomes complete, readable, and materially aligned with the original source without inventing content.
-
-## Category
-
-`task`
 
 ## Use When
 

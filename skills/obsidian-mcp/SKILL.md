@@ -1,16 +1,11 @@
 ---
-name: Obsidian MCP
+name: obsidian-mcp
 description: Guide for the `mcp_obsidian` server and its tools. Use when users ask how to search markdown notes, read files or sections, inspect links, navigate directories, or choose parameters and examples for Obsidian markdown tools.
-category: mcp
 ---
 
 # Mission
 
 Use `mcp_obsidian` tools with a strict discovery-first and narrow-read approach.
-
-## Category
-
-`mcp`
 
 ## Use When
 

@@ -1,9 +1,6 @@
-export type SkillCategory = "task" | "mcp";
-
 export interface SkillFrontmatter {
   name: string;
   description: string;
-  category: SkillCategory;
 }
 
 export interface SkillManifest extends SkillFrontmatter {

@@ -1,16 +1,11 @@
 ---
-name: Document QA
+name: document-qa
 description: Answer questions from local documents and references with citation-friendly excerpts. Use when the user asks for document Q&A, evidence extraction, or source-grounded answers.
-category: task
 ---
 
 # Mission
 
 Produce accurate, evidence-based answers grounded in loaded documents.
-
-## Category
-
-`task`
 
 ## Use When
 
@@ -55,7 +50,7 @@ Confidence rules:
 ## Integration
 
 1. Use after `obsidian-mcp` when note discovery or narrow file reads are needed first.
-2. Feed outputs into `document-summary`, `report-writing`, or `planning` when the next step is synthesis.
+2. Feed outputs into `document-summary` or `report-writing` when the next step is synthesis.
 3. Preserve exact excerpts and confidence notes when downstream skills reuse the answer.
 
 ## Resource Loading

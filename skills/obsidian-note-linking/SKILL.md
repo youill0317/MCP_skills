@@ -1,16 +1,11 @@
 ---
-name: Obsidian Note Linking
+name: obsidian-note-linking
 description: Suggest related Obsidian note connections for the currently open note by exploring vault structure, searching relevant notes, and proposing consistent connection patterns (for example `[[wikilinks]]`, heading/block references, embeds, tags, and ordered previous/next links based on numeric filename prefixes) with concise rationale.
-category: task
 ---
 
 # Mission
 
 Improve note connectivity in Obsidian by proposing high-signal, consistent connection patterns grounded in actual vault evidence.
-
-## Category
-
-`task`
 
 ## Use When
 
@@ -75,7 +70,6 @@ Quality rules:
 
 1. Use with `obsidian-mcp` for tool-family selection and safe discovery/read flow.
 2. Hand off refined notes to `document-summary` when user wants merged synthesis.
-3. Hand off to `planning` when connections imply project next steps or action tracking.
 
 ## Resource Loading
 

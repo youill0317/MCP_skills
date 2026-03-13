@@ -24,6 +24,7 @@ test("compileInstructions includes task, inputs, and references", async () => {
   assert.ok(compiled.includes("Summarize the attached policy document."));
   assert.ok(compiled.includes("\"audience\": \"exec\""));
   assert.ok(compiled.includes("references/summary-style.md"));
+  assert.ok(!compiled.includes("Category:"));
 });
 
 test("compileInstructions works for pdf-markdown-remediation with references", async () => {
@@ -44,6 +45,7 @@ test("compileInstructions works for pdf-markdown-remediation with references", a
   assert.ok(compiled.includes("Convert extracted PDF text into complete Markdown."));
   assert.ok(compiled.includes("\"preserve_language\": true"));
   assert.ok(compiled.includes("references/verification-checklist.md"));
+  assert.ok(!compiled.includes("Category:"));
 });
 
 test("compileInstructions works for markdown-conversion with references", async () => {
@@ -64,6 +66,7 @@ test("compileInstructions works for markdown-conversion with references", async 
   assert.ok(compiled.includes("Convert the provided DOCX file into first-pass Markdown."));
   assert.ok(compiled.includes("\"use_markitdown_mcp\": true"));
   assert.ok(compiled.includes("references/post-conversion-review.md"));
+  assert.ok(!compiled.includes("Category:"));
 });
 
 test("compileInstructions works for note-exam-prep with references", async () => {
@@ -84,4 +87,5 @@ test("compileInstructions works for note-exam-prep with references", async () =>
   assert.ok(compiled.includes("Create a complete exam-prep set from the current note."));
   assert.ok(compiled.includes("\"require_collapsible_answers\": true"));
   assert.ok(compiled.includes("references/output-contract.md"));
+  assert.ok(!compiled.includes("Category:"));
 });

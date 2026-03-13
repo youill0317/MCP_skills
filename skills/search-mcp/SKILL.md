@@ -1,16 +1,11 @@
 ---
-name: Search MCP
+name: search-mcp
 description: Guide for choosing and using individual search MCP servers while coordinating them with built-in web search. Use when users ask how to choose, parameterize, or combine Exa, Tavily, Brave, or Semantic Scholar/Asta MCP tools, especially when tool-stack selection is the main problem.
-category: mcp
 ---
 
 # Mission
 
 Choose and parameterize search MCP providers accurately, while coordinating them with built-in web search when that improves speed, coverage, or reliability.
-
-## Category
-
-`mcp`
 
 ## Use When
 

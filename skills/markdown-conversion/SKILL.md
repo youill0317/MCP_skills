@@ -1,16 +1,11 @@
 ---
-name: Markdown Conversion
+name: markdown-conversion
 description: Convert non-Markdown originals such as PDF, DOCX, PPTX, HTML, and web pages into first-pass Markdown. Use when the main job is generating an initial Markdown draft from an accessible source, with MarkItDown MCP as the primary conversion mechanism.
-category: task
 ---
 
 # Mission
 
 Create an initial Markdown version from an accessible non-Markdown source without pretending the result is already normalized or source-verified.
-
-## Category
-
-`task`
 
 ## Use When
 

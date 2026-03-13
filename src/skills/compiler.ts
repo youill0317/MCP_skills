@@ -32,7 +32,6 @@ export function compileInstructions(options: CompileOptions): string {
   sections.push(`# Skill: ${skill.name}`);
   sections.push("");
   sections.push(`Skill ID: ${skill.id}`);
-  sections.push(`Category: ${skill.category}`);
   sections.push(`Description: ${skill.description}`);
   sections.push("");
   sections.push("## Task");
