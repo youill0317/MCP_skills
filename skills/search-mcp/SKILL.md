@@ -21,7 +21,7 @@ Choose and parameterize search MCP providers accurately, while coordinating them
 4. Prefer the smallest tool and narrowest query that can answer the task.
 5. Exclude arXiv from this skill's scope for now.
 6. Treat built-in web search as a first-class option that can be used alone or alongside MCP tools.
-7. Route document-to-Markdown conversion requests to `markdown-conversion` for task execution and to `markitdown-mcp` only when MCP tool choice or setup is the blocker.
+7. Route Markdown cleanup or restructuring requests away from search-provider selection and toward the dedicated Markdown skills.
 
 ## Core Workflow
 
