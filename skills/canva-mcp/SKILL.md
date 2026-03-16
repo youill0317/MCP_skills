@@ -64,7 +64,7 @@ Current tool families in this workspace:
 
 ## Integration
 
-1. Use after `presentation-design`, `design-brief`, `report-writing`, or other content-planning skills when the narrative or asset brief is ready and the blocker is Canva execution.
+1. Use after `presentation-design`, `report-writing`, or other content-planning skills when the narrative or asset brief is ready and the blocker is Canva execution.
 2. Use before writing-heavy skills only when the real problem is Canva ID discovery, asset handling, export mechanics, or verification-ready retrieval.
 3. Hand off content briefs to `generate-design` rather than turning this skill into a long-form writing skill.
 4. Preserve the distinction between read-only retrieval and structural modification.

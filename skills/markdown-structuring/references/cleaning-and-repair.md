@@ -1,6 +1,6 @@
 # Cleaning and Repair
 
-Load this reference when Markdown or extracted text contains artifact noise, OCR instability, or line-wrap damage during source-aligned repair.
+Load this reference when Markdown or extracted text contains artifact noise, OCR instability, line-wrap damage, or broken syntax before logical restructuring.
 
 ## Artifact Removal
 
@@ -12,30 +12,28 @@ Remove repeated non-body text only when it is clearly an extraction artifact or 
 - scanner labels
 - system tags such as `<smtcmp_block>` or `<xml>`
 
-Do not remove text that may be part of the document body, even if it looks repetitive, unless repetition is obvious across pages.
+Do not remove text that may belong to the real document body.
 
 ## Line and Paragraph Repair
 
 1. Merge hard-wrapped lines into normal sentences when punctuation and syntax indicate continuation.
-2. Preserve paragraph boundaries when the source clearly starts a new thought, list item, caption, or section.
-3. Restore line-end hyphenation only when it is clearly an artificial split:
-   - `pro- cessing` -> `processing`
-   - `infor- mation` -> `information`
-4. Keep literal hyphenated compounds when they are real words:
-   - `state-of-the-art`
-   - `long-term`
+2. Restore line-end hyphenation only when it is clearly an artificial split.
+3. Correct obvious OCR spacing and split-token errors only when the intended token is unambiguous.
+4. Split a damaged paragraph into smaller logical units when that is required for correct restructuring.
+5. Merge related fragments across former page boundaries when they clearly belong to one argument, section, or list.
 
-## OCR Damage Handling
+## Markdown Repair
 
-1. Correct obvious OCR spacing and split-token errors only when the intended token is unambiguous from the source or a strong secondary extract.
-2. Do not guess missing words, citations, or symbols.
-3. Preserve uncertain content rather than replacing it with invented text.
+1. Repair malformed tables when the intended table structure is clear.
+2. Repair broken code fences and malformed Mermaid blocks when the intended block is clear.
+3. Rewrite an unrecoverable table as a list rather than preserving a misleading layout.
+4. Keep literal uncertainty when the source does not support a confident repair.
 
 ## Recovery Rules
 
 1. Restore omitted text only when the source or a high-confidence auxiliary extract confirms it.
-2. If current Markdown and auxiliary extracts disagree, prefer the original source when available.
-3. If no trustworthy source view resolves the conflict, preserve the literal evidence and avoid synthesis.
+2. If multiple extracts disagree, prefer the best available source of truth.
+3. If no trustworthy source resolves the conflict, preserve the literal evidence and avoid synthesis.
 
 ## Repair Priorities
 
@@ -43,7 +41,8 @@ Apply repairs in this order:
 
 1. remove repeated artifacts
 2. restore broken words
-3. merge broken sentences
+3. merge or split damaged sentences
 4. restore paragraph boundaries
-5. recover omitted source content
-6. classify structure before formatting
+5. repair broken Markdown blocks
+6. classify logical structure
+7. reorganize content into the final Markdown file

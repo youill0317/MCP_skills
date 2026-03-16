@@ -17,7 +17,6 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.deepEqual(ids, sorted);
   assert.ok(ids.includes("document-qa"));
   assert.ok(ids.includes("document-summary"));
-  assert.ok(ids.includes("design-brief"));
   assert.ok(ids.includes("search-mcp"));
   assert.ok(ids.includes("research-strategy"));
   assert.ok(ids.includes("obsidian-mcp"));
@@ -27,17 +26,6 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.ok(ids.includes("markdown-structuring"));
   assert.ok(ids.includes("markdown-format-normalization"));
   assert.ok(ids.includes("note-exam-prep"));
-
-  const designBrief = result.skills.find((item) => item.id === "design-brief");
-  assert.ok(designBrief);
-  assert.equal(designBrief.name, "design-brief");
-  assert.ok((designBrief.description ?? "").includes("poster"));
-  assert.ok((designBrief.description ?? "").includes("flyer"));
-  assert.ok((designBrief.description ?? "").includes("brief"));
-  assert.ok((designBrief.references ?? []).includes("references/asset-types.md"));
-  assert.ok((designBrief.references ?? []).includes("references/copy-hierarchy.md"));
-  assert.ok((designBrief.references ?? []).includes("references/layout-patterns.md"));
-  assert.ok((designBrief.references ?? []).includes("references/quality-gate.md"));
 
   for (const skill of result.skills) {
     assert.ok(!("category" in skill));
@@ -102,6 +90,23 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.ok((reportWriting.description ?? "").includes("structured report"));
   assert.ok((reportWriting.description ?? "").includes("executive brief"));
   assert.ok((reportWriting.references ?? []).includes("references/research-report.md"));
+
+  const academicWriting = result.skills.find((item) => item.id === "academic-writing");
+  assert.ok(academicWriting);
+  assert.equal(academicWriting.name, "academic-writing");
+  assert.ok((academicWriting.description ?? "").includes("APA 7 style"));
+  assert.ok((academicWriting.references ?? []).includes("references/paper-types-and-required-elements.md"));
+  assert.ok((academicWriting.references ?? []).includes("references/title-page-abstract-keywords.md"));
+  assert.ok((academicWriting.references ?? []).includes("references/headings-paragraphs-and-layout.md"));
+  assert.ok((academicWriting.references ?? []).includes("references/quotations-footnotes-and-appendices.md"));
+  assert.ok((academicWriting.references ?? []).includes("references/submission-readiness-checklist.md"));
+  assert.ok((academicWriting.references ?? []).includes("references/input-sufficiency-and-gap-handling.md"));
+  assert.ok(!(academicWriting.references ?? []).includes("references/type-empirical.md"));
+  assert.ok(!(academicWriting.references ?? []).includes("references/type-literature-review-meta-analysis.md"));
+  assert.ok(!(academicWriting.references ?? []).includes("references/type-theoretical.md"));
+  assert.ok(!(academicWriting.references ?? []).includes("references/type-methodological.md"));
+  assert.ok(!(academicWriting.references ?? []).includes("references/type-qualitative.md"));
+  assert.ok(!(academicWriting.references ?? []).includes("references/type-mixed-methods.md"));
 
   const documentSummary = result.skills.find((item) => item.id === "document-summary");
   assert.ok(documentSummary);

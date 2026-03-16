@@ -24,14 +24,25 @@ test("loadSkill reads report-writing metadata and body", async () => {
   assert.ok(skill.body.includes("## Output Standard"));
 });
 
-test("loadSkill reads design-brief metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "design-brief");
-  assert.equal(skill.id, "design-brief");
-  assert.equal(skill.name, "design-brief");
-  assert.ok(skill.description.includes("poster"));
-  assert.ok(skill.description.includes("flyer"));
-  assert.ok(skill.description.includes("brief"));
-  assert.ok(skill.body.includes("## Output Standard"));
+test("loadSkill reads academic-writing APA-only metadata and body", async () => {
+  const skill = await loadSkill(skillsRoot, "academic-writing");
+  assert.equal(skill.id, "academic-writing");
+  assert.equal(skill.name, "academic-writing");
+  assert.ok(skill.description.includes("APA 7 style"));
+  assert.ok(skill.body.includes("## Core Workflow"));
+  assert.ok(skill.body.includes("Task Mode"));
+  assert.ok(skill.references.includes("references/paper-types-and-required-elements.md"));
+  assert.ok(skill.references.includes("references/title-page-abstract-keywords.md"));
+  assert.ok(skill.references.includes("references/headings-paragraphs-and-layout.md"));
+  assert.ok(skill.references.includes("references/quotations-footnotes-and-appendices.md"));
+  assert.ok(skill.references.includes("references/submission-readiness-checklist.md"));
+  assert.ok(skill.references.includes("references/input-sufficiency-and-gap-handling.md"));
+  assert.ok(!skill.references.includes("references/type-empirical.md"));
+  assert.ok(!skill.references.includes("references/type-literature-review-meta-analysis.md"));
+  assert.ok(!skill.references.includes("references/type-theoretical.md"));
+  assert.ok(!skill.references.includes("references/type-methodological.md"));
+  assert.ok(!skill.references.includes("references/type-qualitative.md"));
+  assert.ok(!skill.references.includes("references/type-mixed-methods.md"));
 });
 
 test("loadSkill reads document-summary memo-style boundary", async () => {
@@ -55,7 +66,9 @@ test("loadSkill reads markdown-structuring metadata and body", async () => {
   const skill = await loadSkill(skillsRoot, "markdown-structuring");
   assert.equal(skill.id, "markdown-structuring");
   assert.equal(skill.name, "markdown-structuring");
-  assert.ok(skill.description.includes("canonical note format"));
+  assert.ok(skill.description.includes("new, well-structured Markdown document"));
+  assert.ok(skill.description.includes("logical order"));
+  assert.ok(skill.description.includes("standardized frontmatter schema"));
   assert.ok(skill.body.includes("## Core Workflow"));
 });
 
@@ -96,7 +109,10 @@ test("loadSkill reads markdown-structuring restructuring boundary", async () => 
   const skill = await loadSkill(skillsRoot, "markdown-structuring");
   assert.equal(skill.id, "markdown-structuring");
   assert.equal(skill.name, "markdown-structuring");
-  assert.ok(skill.description.includes("original order and document shape do not need to be preserved"));
+  assert.ok(skill.description.includes("instead of preserving the original layout"));
+  assert.ok(skill.body.includes("Treat `---` page boundaries as analysis hints only"));
+  assert.ok(skill.body.includes("Use `>` only for direct quotations"));
+  assert.ok(skill.body.includes("tags`, `previous_lecture`, `next_lecture`, `related_notes`, and `updated`"));
   assert.ok(skill.body.includes("## Resource Loading"));
 });
 
@@ -104,7 +120,12 @@ test("loadSkill reads markdown-format-normalization metadata and body", async ()
   const skill = await loadSkill(skillsRoot, "markdown-format-normalization");
   assert.equal(skill.id, "markdown-format-normalization");
   assert.equal(skill.name, "markdown-format-normalization");
-  assert.ok(skill.description.includes("existing Markdown"));
+  assert.ok(skill.description.includes("original Markdown content"));
+  assert.ok(skill.description.includes("page boundaries"));
+  assert.ok(skill.description.includes("standardized frontmatter schema"));
+  assert.ok(skill.body.includes("Treat every `---` separator as a page boundary"));
+  assert.ok(skill.body.includes("Use `>` only for direct quotations"));
+  assert.ok(skill.body.includes("tags`, `previous_lecture`, `next_lecture`, `related_notes`, and `updated`"));
   assert.ok(skill.body.includes("## Integration"));
 });
 
@@ -122,7 +143,6 @@ test("listSkillManifests returns installed skills", async () => {
   const ids = manifests.map((item) => item.id);
   assert.ok(ids.includes("document-qa"));
   assert.ok(ids.includes("document-summary"));
-  assert.ok(ids.includes("design-brief"));
   assert.ok(ids.includes("search-mcp"));
   assert.ok(ids.includes("research-strategy"));
   assert.ok(ids.includes("obsidian-mcp"));
@@ -135,14 +155,6 @@ test("listSkillManifests returns installed skills", async () => {
   assert.ok(ids.includes("markdown-structuring"));
   assert.ok(ids.includes("markdown-format-normalization"));
   assert.ok(ids.includes("note-exam-prep"));
-
-  const designBrief = manifests.find((item) => item.id === "design-brief");
-  assert.ok(designBrief);
-  assert.equal(designBrief.name, "design-brief");
-  assert.ok(designBrief.references.includes("references/asset-types.md"));
-  assert.ok(designBrief.references.includes("references/copy-hierarchy.md"));
-  assert.ok(designBrief.references.includes("references/layout-patterns.md"));
-  assert.ok(designBrief.references.includes("references/quality-gate.md"));
 
   const search = manifests.find((item) => item.id === "search-mcp");
   assert.ok(search);
@@ -183,6 +195,22 @@ test("listSkillManifests returns installed skills", async () => {
   assert.ok(reportWriting);
   assert.equal(reportWriting.name, "report-writing");
   assert.ok(reportWriting.references.includes("references/research-report.md"));
+
+  const academicWriting = manifests.find((item) => item.id === "academic-writing");
+  assert.ok(academicWriting);
+  assert.equal(academicWriting.name, "academic-writing");
+  assert.ok(academicWriting.references.includes("references/paper-types-and-required-elements.md"));
+  assert.ok(academicWriting.references.includes("references/title-page-abstract-keywords.md"));
+  assert.ok(academicWriting.references.includes("references/headings-paragraphs-and-layout.md"));
+  assert.ok(academicWriting.references.includes("references/quotations-footnotes-and-appendices.md"));
+  assert.ok(academicWriting.references.includes("references/submission-readiness-checklist.md"));
+  assert.ok(academicWriting.references.includes("references/input-sufficiency-and-gap-handling.md"));
+  assert.ok(!academicWriting.references.includes("references/type-empirical.md"));
+  assert.ok(!academicWriting.references.includes("references/type-literature-review-meta-analysis.md"));
+  assert.ok(!academicWriting.references.includes("references/type-theoretical.md"));
+  assert.ok(!academicWriting.references.includes("references/type-methodological.md"));
+  assert.ok(!academicWriting.references.includes("references/type-qualitative.md"));
+  assert.ok(!academicWriting.references.includes("references/type-mixed-methods.md"));
 
   const obsidianNoteLinking = manifests.find((item) => item.id === "obsidian-note-linking");
   assert.ok(obsidianNoteLinking);

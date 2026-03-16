@@ -1,58 +1,51 @@
 # Structure Analysis
 
-Load this reference when repaired Markdown or extraction views have ambiguous document structure.
+Load this reference when repaired Markdown still has ambiguous structure and must be reorganized into a better logical order.
 
 ## Structural Units to Detect
 
 - document title
-- section headings
+- major sections
+- subsections
 - body paragraphs
 - ordered and unordered lists
+- examples or supporting details
 - tables
 - code blocks
-- quotes
-- callouts such as Note, Warning, Tip, or Caution
-- math expressions
-- image references
-- footnotes or endnotes
+- Mermaid blocks
+- quotes or external-source excerpts
+- tags or related-note metadata candidates
 
 ## Heading Heuristics
 
-Treat a line as a heading only when it behaves like a section boundary, not merely emphasized text.
+1. Judge heading depth from the full document context, not from one line alone.
+2. Use `#`, `##`, `###`, and deeper levels according to whether a block functions as a major topic, middle topic, minor topic, or lower-level subdivision.
+3. Promote text to a heading only when it behaves like a real section boundary.
+4. If several separated passages discuss the same topic, merge them into one section when that improves the logical flow without losing content.
+5. If the level is ambiguous, prefer a paragraph or list item over a guessed heading.
 
-Signals:
+## Paragraph and List Heuristics
 
-- short standalone phrase
-- title-style capitalization or numbering
-- followed by a new paragraph or subsection
-- repeated structural pattern across the document
-- confirmed by the source or repeated extraction evidence when available
+1. Break long paragraphs into smaller units when the source contains distinct claims, examples, or enumerated ideas.
+2. Merge adjacent fragments when they clearly belong to the same thought.
+3. Convert content into a list when parallel or ordered intent is clear.
+4. Use nested lists only when a parent-child relationship is clear.
+5. Reorder list items only when the original sequence is visibly damaged or when a clearer logical progression is strongly supported by the source.
 
-## List Heuristics
+## Table and Block Heuristics
 
-Treat content as a list when there is a repeated marker or enumerated sequence:
+1. Treat content as a table when rows show repeated column alignment, label-value grids, or header-like rows followed by parallel entries.
+2. If Markdown table rendering would lose meaning, rewrite the structure as a list instead.
+3. Keep code and Mermaid blocks fenced and separate from surrounding prose.
 
-- bullets like `-`, `*`, or symbol variants
-- numeric items like `1.`, `2.`, `3.`
-- short parallel clauses stacked line by line
+## Quotes and Callouts
 
-If markers were lost, infer a list only when parallel structure is strong.
-Use the source to break ties when paragraph-vs-list classification is ambiguous.
+1. Use `>` only for direct quotations, external-source excerpts, or clearly quoted source material.
+2. Do not use blockquotes for general notes, emphasis, reminders, or speaker commentary.
+3. Treat note-like material as paragraphs, headings, or list items unless the source explicitly signals a callout that should remain distinct.
 
-## Table Heuristics
+## Reordering Principle
 
-Treat content as a table when rows show repeated column alignment, label-value grids, or header-like rows followed by parallel data entries.
-
-If Markdown table rendering would lose meaning:
-
-- repeat merged-cell labels in affected rows, or
-- rewrite the structure as a list instead of forcing a broken table
-
-If the source clearly shows a table but current Markdown flattened it, prioritize recovering row and column relationships over pretty formatting.
-
-## Special Blocks
-
-- Callouts: render as blockquotes with a bold label
-- Code: use fenced code blocks with a language tag when known
-- Math: use inline `$...$` or block `$$...$$`
-- Footnotes: keep inline references and emit definitions at the end
+1. Use page boundaries and local ordering as clues, not as final constraints.
+2. Group related material together even when the source scattered it across pages or sections.
+3. Prefer a structure that reads as one coherent Markdown document rather than a page-by-page reconstruction.

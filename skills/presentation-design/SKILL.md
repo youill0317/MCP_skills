@@ -111,7 +111,7 @@ Integrity tags:
 4. If `academic-writing` output is provided, condense paper sections into audience-fit slide messages.
 5. Use after `document-summary` when the source material is long and first needs compression.
 6. Use `document-qa` to ground ambiguous deck claims in local evidence before escalating to web checks.
-7. Use `design-brief` instead when the request is for posters, flyers, card-news, banners, or other non-slide visual assets.
+7. Keep this skill limited to slide-based work; treat posters, flyers, banners, card-news, and other non-slide visual assets as outside this skill's scope.
 
 ## Resource Loading
 

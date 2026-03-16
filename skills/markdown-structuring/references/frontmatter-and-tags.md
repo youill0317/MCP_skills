@@ -1,46 +1,49 @@
 # Frontmatter and Tags
 
-Load this reference when creating or preserving YAML frontmatter for repaired documents.
+Load this reference when creating or normalizing the standard frontmatter schema for the reorganized Markdown document.
 
-## Frontmatter Requirement
+## Required Standard Keys
 
-Every output should start with YAML frontmatter.
-
-If no safe metadata is available, emit an empty frontmatter block rather than inventing fields.
-
-## Frontmatter Shape
-
-Use the smallest valid shape that fits the source and destination.
-
-Minimal form:
+Every output must include these keys in frontmatter:
 
 ```yaml
 ---
+tags: []
+previous_lecture: ""
+next_lecture: ""
+related_notes: []
+updated: "YYYY-MM-DD"
 ---
 ```
 
-If tags are explicitly requested or clearly expected by project convention, use:
+## Field Rules
 
-```yaml
----
-tags: [pdf/converted, topic-tag-1, topic-tag-2]
----
-```
+1. `tags` must always be a YAML list.
+2. `previous_lecture` must always be a string and use an Obsidian wikilink like `"[[Lecture Note]]"` when known.
+3. `next_lecture` must always be a string and use an Obsidian wikilink like `"[[Lecture Note]]"` when known.
+4. `related_notes` must always be a YAML list of Obsidian wikilinks.
+5. `updated` must always be the current run date in `YYYY-MM-DD` format.
 
-## Tag Rules
+## Preservation Rules
 
-1. Tags are optional metadata, not a mandatory frontmatter field.
-2. Include `pdf/converted` only when tags are being added and the source-aligned repair still benefits from conversion provenance.
-3. Add a small number of topic tags grounded in the source text only when the task or convention expects tags.
-4. Prefer concise lowercase tags.
-5. Use content-derived nouns or short noun phrases, not opinions or summaries.
-6. Do not invent highly specific tags unsupported by the document.
+1. Frontmatter is mandatory.
+2. Preserve safe existing metadata keys beyond the standard schema.
+3. If a standard key is missing, add it with the required default value.
+4. Use `[]` for missing list values and `""` for missing string link values.
+5. Keep metadata compact and secondary to the main body structure.
 
-## Tag Selection Priority
+## Legacy Key Normalization
 
-Choose tags from:
+Convert equivalent legacy keys to the standard snake_case keys, then remove the legacy keys.
 
-1. document subject
-2. named domain or project
-3. recurring technical topic
-4. document form if strongly signaled, such as `policy`, `manual`, or `lecture-notes`
+- `prev`, `previous`, `previous-note`, `previous lecture` -> `previous_lecture`
+- `next`, `next-note`, `next lecture` -> `next_lecture`
+- `related`, `related-note`, `related_notes_section` -> `related_notes`
+- `modified`, `last_modified`, `updated_at` -> `updated`
+
+## Tag and Link Rules
+
+1. Preserve or add tags only when they are grounded in the source text or in a strong project convention.
+2. Store `previous_lecture`, `next_lecture`, and every item in `related_notes` as Obsidian wikilinks.
+3. Do not create a separate body section for related notes; keep this information in frontmatter.
+4. Prefer empty defaults over fabricated metadata.

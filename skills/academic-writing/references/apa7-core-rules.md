@@ -4,10 +4,11 @@ Use these baseline rules for all paper types.
 
 ## Manuscript Structure
 
-1. Start with title and abstract before the main body.
+1. Start with the required front matter before the main body.
 2. Use clear section headings and keep heading depth consistent.
 3. Keep paragraph focus narrow: one claim cluster per paragraph.
 4. End each major section with a short synthesis sentence.
+5. Match the manuscript structure to the active APA paper profile.
 
 ## Heading Discipline
 
@@ -28,10 +29,11 @@ Use these baseline rules for all paper types.
 2. Keep symbol formatting consistent across the manuscript.
 3. Define abbreviations at first use.
 4. Align statistical statements with reported tables/figures.
+5. Do not claim a result that cannot be traced to the provided analysis output.
 
 ## Internal Consistency
 
 1. Keep terminology stable across sections.
-2. Ensure hypotheses, methods, and conclusions are logically connected.
+2. Ensure the title page, abstract, body, and conclusion are logically connected.
 3. Ensure all cited works appear in the reference list.
 4. Ensure all reference-list items are cited in the text.
