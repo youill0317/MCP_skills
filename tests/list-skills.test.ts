@@ -108,6 +108,16 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   assert.ok(!(academicWriting.references ?? []).includes("references/type-qualitative.md"));
   assert.ok(!(academicWriting.references ?? []).includes("references/type-mixed-methods.md"));
 
+  const documentQa = result.skills.find((item) => item.id === "document-qa");
+  assert.ok(documentQa);
+  assert.equal(documentQa.name, "document-qa");
+  assert.ok((documentQa.description ?? "").includes("evidence mapping"));
+  assert.ok((documentQa.references ?? []).includes("references/question-types-and-answer-modes.md"));
+  assert.ok((documentQa.references ?? []).includes("references/source-hierarchy-and-authority.md"));
+  assert.ok((documentQa.references ?? []).includes("references/conflict-and-negative-answer-policy.md"));
+  assert.ok((documentQa.references ?? []).includes("references/structured-output-contract.md"));
+  assert.ok((documentQa.references ?? []).includes("references/inference-boundaries.md"));
+
   const documentSummary = result.skills.find((item) => item.id === "document-summary");
   assert.ok(documentSummary);
   assert.equal(documentSummary.name, "document-summary");

@@ -7,13 +7,14 @@ Standards for citing evidence from loaded documents.
 Every evidence citation must include:
 
 1. **File path**: relative path from the skill or project root.
-2. **Line range**: start and end line numbers.
+2. **Line range or section marker**: start and end line numbers when available, otherwise the nearest stable section marker.
 3. **Excerpt**: the relevant quoted text.
+4. **Support type**: `direct`, `partial`, or `inference`.
 
 Example:
 
 ```
-- **[docs/api-spec.md:L42-L48]**: "The endpoint returns a 404 when the resource is not found."
+- **[docs/api-spec.md:L42-L48]** (`direct`): "The endpoint returns a 404 when the resource is not found."
 ```
 
 ## Multiple Citations
@@ -30,8 +31,8 @@ When synthesizing from multiple sources:
 Answer text supported by [1] and further confirmed by [2].
 
 **Evidence:**
-[1] docs/api-spec.md:L42-L48 — "..."
-[2] docs/changelog.md:L15-L17 — "..."
+[1] docs/api-spec.md:L42-L48 (`direct`) "..."
+[2] docs/changelog.md:L15-L17 (`direct`) "..."
 ```
 
 ## Partial Evidence
@@ -41,6 +42,14 @@ When a passage partially supports the answer:
 1. Quote the relevant portion only.
 2. Note what the passage supports and what remains unconfirmed.
 3. Use `(partial)` marker after the citation.
+
+## Section-Marker Fallback
+
+When line numbers are not reliable:
+
+1. Cite the nearest stable heading, section title, or document marker.
+2. Do not fabricate synthetic line numbers.
+3. Preserve enough location detail for a reader to find the passage again.
 
 ## Prohibitions
 

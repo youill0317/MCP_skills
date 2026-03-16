@@ -41,3 +41,4 @@ Apply these rules when documents exceed context window limits.
 1. Always map excerpts back to original line numbers.
 2. When citing from a chunk, include the original document position.
 3. Never cite a chunk boundary as if it were the full passage.
+4. If exact line numbers are unstable or unavailable, fall back to the nearest reliable section marker defined by the citation policy.

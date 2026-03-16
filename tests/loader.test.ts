@@ -11,8 +11,14 @@ test("loadSkill reads frontmatter and body", async () => {
   const skill = await loadSkill(skillsRoot, "document-qa");
   assert.equal(skill.id, "document-qa");
   assert.equal(skill.name, "document-qa");
-  assert.ok(skill.description.includes("Answer questions"));
+  assert.ok(skill.description.includes("evidence mapping"));
   assert.ok(skill.body.includes("## Use When"));
+  assert.ok(skill.body.includes("Add these sections only when applicable"));
+  assert.ok(skill.references.includes("references/question-types-and-answer-modes.md"));
+  assert.ok(skill.references.includes("references/source-hierarchy-and-authority.md"));
+  assert.ok(skill.references.includes("references/conflict-and-negative-answer-policy.md"));
+  assert.ok(skill.references.includes("references/structured-output-contract.md"));
+  assert.ok(skill.references.includes("references/inference-boundaries.md"));
 });
 
 test("loadSkill reads report-writing metadata and body", async () => {
@@ -211,6 +217,15 @@ test("listSkillManifests returns installed skills", async () => {
   assert.ok(!academicWriting.references.includes("references/type-methodological.md"));
   assert.ok(!academicWriting.references.includes("references/type-qualitative.md"));
   assert.ok(!academicWriting.references.includes("references/type-mixed-methods.md"));
+
+  const documentQa = manifests.find((item) => item.id === "document-qa");
+  assert.ok(documentQa);
+  assert.equal(documentQa.name, "document-qa");
+  assert.ok(documentQa.references.includes("references/question-types-and-answer-modes.md"));
+  assert.ok(documentQa.references.includes("references/source-hierarchy-and-authority.md"));
+  assert.ok(documentQa.references.includes("references/conflict-and-negative-answer-policy.md"));
+  assert.ok(documentQa.references.includes("references/structured-output-contract.md"));
+  assert.ok(documentQa.references.includes("references/inference-boundaries.md"));
 
   const obsidianNoteLinking = manifests.find((item) => item.id === "obsidian-note-linking");
   assert.ok(obsidianNoteLinking);
