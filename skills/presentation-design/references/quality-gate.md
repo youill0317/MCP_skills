@@ -1,6 +1,6 @@
 # Quality Gate
 
-Run this checklist before returning a final deck spec.
+Run this checklist before returning a final deck spec or audit report.
 
 ## A. Narrative Checks
 
@@ -30,7 +30,15 @@ Run this checklist before returning a final deck spec.
 3. Axes, scales, and units do not mislead.
 4. Unverified claims are tagged `[EVIDENCE NEEDED]`.
 
-## E. Delivery Readiness Checks
+## E. Audit Checks
+
+1. Numeric claims are traced to a source or marked `[EVIDENCE NEEDED]`.
+2. Interpretations are no stronger than the underlying evidence.
+3. Chart axes, units, baselines, and comparison windows do not distort the conclusion.
+4. Freshness-sensitive claims include a verified date when web checking was required.
+5. Unresolved items are explicitly tagged `[UNVERIFIED]` or `[INPUT NEEDED: ...]`.
+
+## F. Delivery Readiness Checks
 
 1. Slide count fits available time.
 2. Opening and closing are audience-appropriate.

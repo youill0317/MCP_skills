@@ -16,6 +16,7 @@ Use this reference when the main question is which Canva MCP tool family should 
 - Use `get-design-pages` for page indexes and thumbnails in paged designs.
 - Use `get-presenter-notes` only for presentation speaker notes.
 - Use `get-export-formats` to confirm valid export targets before `export-design`.
+- For presentation verification, use these read tools to build an inspection-ready deck package before handing off to `presentation-design`.
 
 ## Choose Generation or Import When the User Wants a New Design
 

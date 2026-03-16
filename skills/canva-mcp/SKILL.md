@@ -1,32 +1,33 @@
 ---
 name: canva-mcp
-description: Guide for the official Canva MCP connector and its tools. Use when users ask how to search Canva designs or folders, resolve Canva links, generate or import designs, choose brand kits or assets, export content, manage comments, perform page-level Canva operations, or hand off finished Canva work as a web link plus a short local Markdown design report, especially when the main blocker is tool selection or parameterization rather than writing the content itself.
+description: Guide for the official Canva MCP connector and its tools. Use when users ask how to search Canva designs or folders, resolve Canva links, generate or import designs, choose brand kits or assets, export content, manage comments, perform page-level Canva operations, retrieve a Canva deck package for downstream verification, or hand off finished Canva work as a web link plus a short local Markdown design report, especially when the main blocker is tool selection or parameterization rather than writing the content itself.
 ---
 
 # Mission
 
-Choose and parameterize Canva MCP workflows accurately, while keeping Canva tool-usage guidance separate from the underlying writing, slide-planning, or design-content task.
+Choose and parameterize Canva MCP workflows accurately, while keeping Canva tool-usage guidance separate from the underlying writing, slide-planning, design-content, or fact-verification task.
 
 ## Use When
 
 - The user needs help choosing or parameterizing Canva MCP tools.
 - The task involves Canva design IDs, shortlinks, design URLs, folder IDs, comments, export settings, or page operations.
 - The main blocker is tool selection, identifier handling, or request shape rather than drafting the design content itself.
-- The user wants to know whether a Canva task should use generation, import, metadata reads, comments, folder operations, export, or page-level structural edits.
+- The user wants to know whether a Canva task should use generation, import, metadata reads, comments, folder operations, export, page-level structural edits, or inspection-ready retrieval for downstream verification.
 
 ## Scope
 
 1. Cover current Canva MCP tool families for design discovery, generation, import, metadata reads, export, comments, folder operations, structural page operations, and final delivery handoff.
-2. Focus on operating Canva MCP, not on producing the actual report, memo, pitch narrative, or design copy from scratch.
+2. Focus on operating Canva MCP, not on producing the actual report, memo, pitch narrative, design copy, or verification verdict from scratch.
 3. Treat exact tool inventory as connector-release dependent and check the connected tool list before assuming template search or freeform editing tools exist.
 4. Prefer the smallest valid identifier flow, such as resolving one shortlink, searching one design, or inspecting one completed design, before broader operations.
 5. Keep `design_id`, `folder_id`, `comment_id`, `candidate_id`, `job_id`, and asset ordering explicit.
 6. Treat destructive page operations and remote imports as high-risk calls that need stricter validation than simple reads.
 7. Default final delivery to a Canva web link plus a short local Markdown report, not to a downloaded export file.
+8. For presentation verification requests, stop at inspection-ready retrieval and hand off fact-checking logic to `presentation-design`.
 
 ## Core Workflow
 
-1. Classify the request as discovery, generation, import, read-only retrieval, collaboration, organization, export, or page operations before choosing a tool.
+1. Classify the request as discovery, generation, import, read-only retrieval, collaboration, organization, export, page operations, or verification handoff before choosing a tool.
 2. If the user provides a `https://canva.link/...` URL, use `resolve-shortlink` first and then extract the real `design_id`.
 3. If the user provides a full Canva design URL, extract the `design_id` from the URL and use `get-design` or other design-scoped tools directly.
 4. Use `search-designs`, `search-folders`, and `list-folder-items` when the ID is unknown; use design-scoped tools only after the correct ID is known.
@@ -39,6 +40,7 @@ Choose and parameterize Canva MCP workflows accurately, while keeping Canva tool
 11. Use comment tools for collaboration and folder tools for organization; do not overuse design generation when the real task is retrieval or export.
 12. When the design is complete, prefer returning the Canva design web link from `get-design` instead of downloading an export file, unless the user explicitly asks for a downloadable artifact.
 13. After completion, create a short local Markdown design report summarizing the finished Canva output.
+14. For verification requests, build a deck package with `get-design`, `get-design-pages`, `get-design-content`, and `get-presenter-notes` as needed, then hand it off to `presentation-design` audit mode instead of inventing verification criteria inside this skill.
 
 ## Output Standard
 
@@ -50,6 +52,7 @@ Return guidance that includes:
 4. Whether the task is blocked on missing Canva tool availability in the connected release.
 5. The default final handoff format: Canva web link first, local Markdown report second, export only on explicit request.
 6. Example call shapes when the user needs concrete usage.
+7. For verification requests, the retrieval package needed before downstream audit.
 
 Current tool families in this workspace:
 
@@ -62,14 +65,15 @@ Current tool families in this workspace:
 ## Integration
 
 1. Use after `presentation-design`, `design-brief`, `report-writing`, or other content-planning skills when the narrative or asset brief is ready and the blocker is Canva execution.
-2. Use before writing-heavy skills only when the real problem is Canva ID discovery, asset handling, or export mechanics.
+2. Use before writing-heavy skills only when the real problem is Canva ID discovery, asset handling, export mechanics, or verification-ready retrieval.
 3. Hand off content briefs to `generate-design` rather than turning this skill into a long-form writing skill.
 4. Preserve the distinction between read-only retrieval and structural modification.
 5. Treat the local Markdown design report as a lightweight delivery artifact, not as a substitute for the Canva design itself.
+6. For deck verification, resolve Canva identifiers and extract inspection-ready content, then hand off to `presentation-design` rather than duplicating audit logic here.
 
 ## Resource Loading
 
-- Load `references/tool-families.md` when choosing among discovery, generation, import, retrieval, collaboration, export, or page-operation tools.
+- Load `references/tool-families.md` when choosing among discovery, generation, import, retrieval, collaboration, export, page-operation, or verification-handoff tools.
 - Load `references/generation-and-assets.md` when the user needs brand-kit selection, asset uploads, candidate conversion, or presentation-query guidance.
 - Load `references/access-export-and-ops.md` when design URLs, shortlinks, import URLs, export settings, comments, or `merge-designs` confirmations are involved.
 - Load `references/delivery-and-reporting.md` when the task is finishing a Canva job and returning the result as a link plus a local Markdown report.

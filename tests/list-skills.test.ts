@@ -80,10 +80,21 @@ test("buildListSkillsResult returns sorted skills with count", async () => {
   const canva = result.skills.find((item) => item.id === "canva-mcp");
   assert.ok(canva);
   assert.equal(canva.name, "canva-mcp");
+  assert.ok((canva.description ?? "").includes("retrieve a Canva deck package"));
   assert.ok((canva.references ?? []).includes("references/tool-families.md"));
   assert.ok((canva.references ?? []).includes("references/generation-and-assets.md"));
   assert.ok((canva.references ?? []).includes("references/access-export-and-ops.md"));
   assert.ok((canva.references ?? []).includes("references/delivery-and-reporting.md"));
+
+  const presentationDesign = result.skills.find((item) => item.id === "presentation-design");
+  assert.ok(presentationDesign);
+  assert.equal(presentationDesign.name, "presentation-design");
+  assert.ok((presentationDesign.description ?? "").includes("Canva presentation fact checking"));
+  assert.ok((presentationDesign.description ?? "").includes("slide audit"));
+  assert.ok((presentationDesign.references ?? []).includes("references/audit-workflow.md"));
+  assert.ok((presentationDesign.references ?? []).includes("references/issue-taxonomy.md"));
+  assert.ok((presentationDesign.references ?? []).includes("references/audit-report-contract.md"));
+  assert.ok((presentationDesign.references ?? []).includes("references/source-priority-and-freshness.md"));
 
   const reportWriting = result.skills.find((item) => item.id === "report-writing");
   assert.ok(reportWriting);
