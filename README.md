@@ -1,82 +1,66 @@
-# MCP Skills Bridge
+# Skills Workspace
 
-MCP server that provides two tools:
-- `list_skills`
-- `run_skill`
+공유 스킬 코어를 `skills/` 아래에 보관하고, 로컬에서 형식 검증과 레거시 frontmatter 마이그레이션만 수행하는 저장소입니다.
 
-It loads `SKILL.md`-based workflows from `./skills` (configurable in `config/mcp-skills.config.json`).
-Reference files are loaded only when the caller passes `reference_paths` to `run_skill`.
-Each skill uses generic `SKILL.md` frontmatter centered on `name` and `description`.
-The skill folder id, frontmatter `name`, and exposed API `name` should be the same hyphen-case value.
+이 저장소는 자체 MCP 서버를 제공하지 않습니다. `SKILL.md`가 소스 오브 트루스이며, 각 클라이언트는 필요에 따라 이 스킬 코어를 별도 어댑터 계층으로 소비합니다.
 
-## Install and Build
+## 구조
+
+각 스킬은 다음 구조를 따릅니다.
+
+```text
+skills/
+  <skill-id>/
+    SKILL.md
+    references/
+    scripts/
+    assets/
+```
+
+규칙:
+- 폴더 이름은 소문자, 숫자, 하이픈만 사용합니다.
+- `SKILL.md` frontmatter에는 `name`, `description`이 있어야 합니다.
+- frontmatter의 `name`은 폴더 이름과 정확히 일치해야 합니다.
+- 레거시 `category` 필드는 허용되지 않습니다.
+
+## 설치 및 사용
 
 ```bash
 npm install
 npm run build
 ```
 
-## Run
+검증:
 
 ```bash
-npm start
+npm run validate:skills
 ```
 
-## Frontmatter Migration
+다른 루트를 검증하려면:
 
-Legacy skills that still declare `category` in `SKILL.md` frontmatter must be migrated before starting the server.
-The loader now treats that field as invalid and will skip those skills from `list_skills` and reject direct `run_skill` calls.
+```bash
+npm run validate:skills -- --skills-root ./path/to/skills
+```
+
+레거시 frontmatter 마이그레이션:
 
 ```bash
 npm run migrate:skills-frontmatter
 ```
 
-Check mode reports pending migrations without editing files:
+수정 없이 보고만 하려면:
 
 ```bash
 npm run migrate:skills-frontmatter -- --check
 ```
 
-You can also point the migration at a different root instead of the configured `skillsRoot`:
+## 클라이언트별 사용
 
-```bash
-npm run migrate:skills-frontmatter -- --skills-root ./path/to/skills
-```
+- Claude Code: 필요하면 스킬 코어를 Claude가 읽는 스킬 위치로 복사하거나 연결하고, 별도 등록 파일은 클라이언트 쪽에서 관리합니다.
+- GitHub Copilot: `.github/skills` 또는 팀에서 정한 스킬 위치에 같은 스킬 코어를 배치합니다.
+- Codex / OpenAI: 클라이언트가 요구하는 메타데이터만 추가하고, `SKILL.md` 본문은 공용 코어로 유지합니다.
 
-## Client Configuration (Claude Code)
-
-Add this server entry to Claude Code client JSON (`mcpServers`):
-
-```json
-{
-  "mcpServers": {
-    "mcp_skills": {
-      "command": "node",
-      "args": [
-        "C:/path/to/MCP/MCP_skills/dist/server.js"
-      ]
-    }
-  }
-}
-```
-
-Notes:
-- This server does not require API keys by default.
-- Runtime behavior is controlled by `config/mcp-skills.config.json`.
-
-## Reusing Skills Across Clients
-
-The shared core of each skill lives under `skills/<skill-id>/SKILL.md`.
-Optional supporting files can live beside it in `references/`, `scripts/`, or `assets/`.
-This MCP server is an adapter layer that reads that core and exposes it through `list_skills` and `run_skill`.
-
-| Client | What to Add | Notes |
-| --- | --- | --- |
-| Claude Code | Keep the core skill and place it in a Claude-supported skill location such as `.claude/skills` when needed. Add Claude-specific registration or memory files separately. | Keep `CLAUDE.md` and other Claude-specific guidance outside the shared skill body. |
-| GitHub Copilot | Keep the core skill and place it in `.github/skills` or another supported skill location. Add Copilot-specific instruction files only as needed. | Extra instruction layers may include `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md`, `AGENTS.md`, or `.github/agents/*.agent.md`. VS Code, CLI, and coding-agent setups can share the same skill core while using different registration layers. |
-| Codex / OpenAI | Keep the core skill and add client-specific metadata alongside it if the target environment expects extra files. An `agents/openai.yaml`-style file can be treated as an adapter example, not as a guaranteed universal requirement. | This repository's MCP server can also expose the same skill core to environments that do not natively load skills. |
-
-Rule of thumb:
-- Write the shared skill content first.
-- Add client metadata second.
-- Do not rewrite the skill body per client unless a client-specific constraint truly requires it.
+원칙:
+- 먼저 공용 스킬 본문을 작성합니다.
+- 그 다음 클라이언트별 메타데이터를 얇게 추가합니다.
+- 클라이언트별 제약이 없으면 스킬 본문을 중복 작성하지 않습니다.

@@ -36,7 +36,7 @@ test("loadSkill reads academic-writing APA-only metadata and body", async () => 
   assert.equal(skill.name, "academic-writing");
   assert.ok(skill.description.includes("APA 7 style"));
   assert.ok(skill.body.includes("## Core Workflow"));
-  assert.ok(skill.body.includes("Task Mode"));
+  assert.ok(skill.body.includes("Determine task mode"));
   assert.ok(skill.references.includes("references/paper-types-and-required-elements.md"));
   assert.ok(skill.references.includes("references/title-page-abstract-keywords.md"));
   assert.ok(skill.references.includes("references/headings-paragraphs-and-layout.md"));
@@ -56,7 +56,7 @@ test("loadSkill reads document-summary memo-style boundary", async () => {
   assert.equal(skill.id, "document-summary");
   assert.equal(skill.name, "document-summary");
   assert.ok(skill.description.includes("memo-style"));
-  assert.ok(skill.description.includes("not on writing formal reports or executive briefs"));
+  assert.ok(skill.body.includes("Do not turn the output into a formal report"));
   assert.ok(skill.body.includes("## Output Standard"));
 });
 

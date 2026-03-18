@@ -1,6 +1,7 @@
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { migrateSkillsFrontmatter, type SkillMigrationSummary } from "../skills/frontmatter-migration.js";
+import { validateSkills } from "../skills/validate.js";
+import type { SkillValidationSummary } from "../types.js";
 
 interface CliIo {
   stdout(message: string): void;
@@ -8,7 +9,6 @@ interface CliIo {
 }
 
 interface CliOptions {
-  check: boolean;
   help: boolean;
   skillsRoot?: string;
 }
@@ -16,10 +16,9 @@ interface CliOptions {
 function printUsage(io: CliIo): void {
   io.stdout(
     [
-      "Usage: tsx src/cli/migrate-skills-frontmatter.ts [--check] [--skills-root <path>]",
+      "Usage: tsx src/cli/validate-skills.ts [--skills-root <path>]",
       "",
       "Options:",
-      "  --check               Report legacy category fields without rewriting files.",
       "  --skills-root <path>  Override the default ./skills root.",
       "  --help                Show this help message."
     ].join("\n")
@@ -27,15 +26,10 @@ function printUsage(io: CliIo): void {
 }
 
 function parseCliOptions(argv: string[]): CliOptions {
-  const options: CliOptions = { check: false, help: false };
+  const options: CliOptions = { help: false };
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
-
-    if (arg === "--check") {
-      options.check = true;
-      continue;
-    }
 
     if (arg === "--skills-root") {
       const value = argv[index + 1];
@@ -58,13 +52,9 @@ function parseCliOptions(argv: string[]): CliOptions {
   return options;
 }
 
-function printSummary(io: CliIo, summary: SkillMigrationSummary, check: boolean, skillsRoot: string): void {
-  const modeLabel = check ? "check" : "apply";
+function printSummary(io: CliIo, summary: SkillValidationSummary, skillsRoot: string): void {
   io.stdout(`Skills root: ${skillsRoot}`);
-  io.stdout(`Mode: ${modeLabel}`);
-  io.stdout(
-    `Summary: updated=${summary.updated} unchanged=${summary.unchanged} invalid=${summary.invalid} missing=${summary.missing}`
-  );
+  io.stdout(`Summary: valid=${summary.valid} invalid=${summary.invalid} missing=${summary.missing}`);
 
   for (const record of summary.records) {
     const detail = record.message ? ` (${record.message})` : "";
@@ -72,7 +62,7 @@ function printSummary(io: CliIo, summary: SkillMigrationSummary, check: boolean,
   }
 }
 
-export async function runFrontmatterMigrationCli(argv: string[], io: CliIo): Promise<number> {
+export async function runValidateSkillsCli(argv: string[], io: CliIo): Promise<number> {
   try {
     const options = parseCliOptions(argv);
     if (options.help) {
@@ -84,20 +74,12 @@ export async function runFrontmatterMigrationCli(argv: string[], io: CliIo): Pro
     const __dirname = path.dirname(__filename);
     const projectRoot = path.resolve(__dirname, "../..");
     const skillsRoot = path.resolve(projectRoot, options.skillsRoot ?? "skills");
-    const summary = await migrateSkillsFrontmatter({
-      skillsRoot,
-      check: options.check
-    });
+    const summary = await validateSkills(skillsRoot);
 
-    printSummary(io, summary, options.check, skillsRoot);
+    printSummary(io, summary, skillsRoot);
 
-    if (summary.invalid > 0) {
-      io.stderr("Invalid SKILL.md files were found. Fix them before validation can pass.");
-      return 1;
-    }
-
-    if (options.check && summary.updated > 0) {
-      io.stderr("Legacy category frontmatter still exists. Run the migration without --check.");
+    if (summary.invalid > 0 || summary.missing > 0) {
+      io.stderr("Skill validation failed. Fix invalid or missing SKILL.md files.");
       return 1;
     }
 
@@ -110,7 +92,7 @@ export async function runFrontmatterMigrationCli(argv: string[], io: CliIo): Pro
 
 const invokedPath = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : null;
 if (invokedPath === import.meta.url) {
-  const exitCode = await runFrontmatterMigrationCli(process.argv.slice(2), {
+  const exitCode = await runValidateSkillsCli(process.argv.slice(2), {
     stdout: (message) => process.stdout.write(`${message}\n`),
     stderr: (message) => process.stderr.write(`${message}\n`)
   });

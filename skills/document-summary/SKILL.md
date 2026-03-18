@@ -1,6 +1,6 @@
 ---
 name: document-summary
-description: Produce memo-style key summaries from local documents and notes. Use when the user asks for concise summaries, memo-style key summary, quick key understanding, or key-point extraction. Focus on compressing source content for quick understanding, not on writing formal reports or executive briefs.
+description: Produce memo-style key summaries from local documents and notes. Use only when the user explicitly asks for concise summaries, memo-style key summaries, quick key understanding, or key-point extraction that compresses the source for fast understanding. Do not use for Markdown restructuring, formatting cleanup, frontmatter normalization, or note reorganization. If the source is already Markdown and the user asks to "정리" it without explicit summary intent, prefer Markdown cleanup or structuring skills instead.
 ---
 
 # Mission

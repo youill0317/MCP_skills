@@ -1,6 +1,6 @@
 ---
 name: markdown-format-normalization
-description: Preserve the original Markdown content while adjusting Markdown structure with headings, lists, indentation, tables, code fences, Mermaid blocks, limited blockquotes, and a standardized frontmatter schema. Use when lecture notes, slides, handouts, or other source-faithful Markdown should keep the original wording, order, and page boundaries while only the Markdown symbols, broken syntax, and standardized metadata need cleanup.
+description: Preserve the original Markdown content while adjusting Markdown structure with headings, lists, indentation, tables, code fences, Mermaid blocks, limited blockquotes, and a standardized frontmatter schema. Use when lecture notes, slides, handouts, or other source-faithful Markdown should keep the original wording, order, and page boundaries while only the Markdown symbols, broken syntax, and standardized metadata need cleanup. Prefer this skill over summary skills when the user asks to "정리" an existing Markdown file without asking to compress or summarize its content.
 ---
 
 # Mission

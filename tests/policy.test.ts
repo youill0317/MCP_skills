@@ -1,26 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
-import { isScriptAllowed, resolvePathWithinRoot, validateSkillId } from "../src/security/policy.js";
-import type { AppConfig } from "../src/types.js";
-
-const mockConfig: AppConfig = {
-  skillsRoot: "./skills",
-  scriptExecution: {
-    enabledByDefault: false,
-    timeoutMs: 30000,
-    maxOutputBytes: 65536,
-    allowedScripts: {
-      "document-qa": ["scripts/echo-task.js"]
-    }
-  },
-  references: {
-    maxTotalBytes: 262144
-  },
-  logging: {
-    debug: false
-  }
-};
+import { normalizeToPosix, resolvePathWithinRoot, validateSkillId } from "../src/security/policy.js";
 
 test("validateSkillId enforces kebab-style ids", () => {
   assert.equal(validateSkillId("document-qa"), true);
@@ -36,8 +17,6 @@ test("resolvePathWithinRoot blocks traversal", () => {
   assert.throws(() => resolvePathWithinRoot(root, "../outside.txt"));
 });
 
-test("isScriptAllowed checks allow list by skill", () => {
-  assert.equal(isScriptAllowed(mockConfig, "document-qa", "scripts/echo-task.js"), true);
-  assert.equal(isScriptAllowed(mockConfig, "document-qa", "scripts/nope.js"), false);
-  assert.equal(isScriptAllowed(mockConfig, "document-summary", "scripts/echo-task.js"), false);
+test("normalizeToPosix normalizes Windows-style separators", () => {
+  assert.equal(normalizeToPosix(path.join("skills", "document-qa", "SKILL.md")), "skills/document-qa/SKILL.md");
 });

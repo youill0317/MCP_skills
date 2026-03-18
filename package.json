@@ -1,26 +1,21 @@
 {
-  "name": "mcp-skills-bridge",
+  "name": "skills-workspace",
   "version": "0.1.0",
   "private": true,
-  "description": "MCP bridge that runs skill-like workflows using SKILL.md folders.",
+  "description": "Shared skill workspace with validation and migration tooling.",
   "type": "module",
-  "main": "dist/server.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
-    "dev": "tsx src/server.ts",
-    "migrate:skills-frontmatter": "tsx src/cli/migrate-skills-frontmatter.ts",
-    "test": "tsx --test tests/**/*.test.ts"
+    "validate:skills": "npm run build --silent && node dist/cli/validate-skills.js",
+    "migrate:skills-frontmatter": "npm run build --silent && node dist/cli/migrate-skills-frontmatter.js",
+    "test": "tsc -p tsconfig.tests.json && node dist-test/tests/all.test.js"
   },
   "engines": {
     "node": ">=20.0.0"
   },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.17.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.8.7",
-    "tsx": "^4.19.1",
     "typescript": "^5.6.3"
   }
 }

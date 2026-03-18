@@ -1,6 +1,6 @@
 ---
 name: markdown-structuring
-description: Restructure Markdown into a new, well-structured Markdown document when the original content should be reorganized into a more logical order instead of preserving the original layout. Use for messy research notes, pasted materials, or mixed Markdown that should be rewritten into clearer headings, lists, sections, and a standardized frontmatter schema without summarizing, omitting, translating, or inventing content.
+description: Restructure Markdown into a new, well-structured Markdown document when the original content should be reorganized into a more logical order instead of preserving the original layout. Use for messy research notes, pasted materials, or mixed Markdown that should be rewritten into clearer headings, lists, sections, and a standardized frontmatter schema without summarizing, omitting, translating, or inventing content. Prefer this skill over summary skills when the user wants an existing Markdown note reorganized or rewritten into clearer structure without explicit summary intent.
 ---
 
 # Mission
