@@ -1,4 +1,4 @@
-# Skills Workspace
+# Skill Registry
 
 공유 스킬 코어를 `skills/` 아래에 보관하고, 로컬에서 형식 검증과 레거시 frontmatter 마이그레이션만 수행하는 저장소입니다.
 

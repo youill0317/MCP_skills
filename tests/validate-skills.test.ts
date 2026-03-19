@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { findPackageRootFromModule, resolveSkillsRootFromModule } from "../src/project-paths.js";
 import { runValidateSkillsCli } from "../src/cli/validate-skills.js";
 import { validateSkills } from "../src/skills/validate.js";
 
@@ -28,7 +29,7 @@ function createIoCapture(): {
 }
 
 test("validateSkills succeeds for the current repository skills root", async () => {
-  const skillsRoot = path.resolve(process.cwd(), "skills");
+  const skillsRoot = resolveSkillsRootFromModule(import.meta.url);
   const summary = await validateSkills(skillsRoot);
 
   assert.ok(summary.valid > 0);
@@ -36,8 +37,25 @@ test("validateSkills succeeds for the current repository skills root", async () 
   assert.equal(summary.missing, 0);
 });
 
+test("runValidateSkillsCli resolves the default skills root independently of cwd", async () => {
+  const packageRoot = findPackageRootFromModule(import.meta.url);
+  const workspaceRoot = path.dirname(packageRoot);
+  const originalCwd = process.cwd();
+
+  process.chdir(workspaceRoot);
+  try {
+    const capture = createIoCapture();
+    const exitCode = await runValidateSkillsCli([], capture.io);
+
+    assert.equal(exitCode, 0);
+    assert.ok(capture.stdout.some((line) => line.includes(path.join("skill-registry", "skills"))));
+  } finally {
+    process.chdir(originalCwd);
+  }
+});
+
 test("runValidateSkillsCli fails when a skill folder name is invalid", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-validate-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-validate-"));
   const invalidSkillRoot = path.join(tempRoot, "Bad Skill");
   await mkdir(invalidSkillRoot, { recursive: true });
   await writeFile(
@@ -56,7 +74,7 @@ test("runValidateSkillsCli fails when a skill folder name is invalid", async () 
 });
 
 test("runValidateSkillsCli fails when SKILL.md is missing", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-validate-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-validate-"));
   await mkdir(path.join(tempRoot, "missing-skill"), { recursive: true });
 
   const capture = createIoCapture();

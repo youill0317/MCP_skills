@@ -1,5 +1,6 @@
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
+import { resolveSkillsRootFromModule } from "../project-paths.js";
 import { migrateSkillsFrontmatter } from "../skills/frontmatter-migration.js";
 function printUsage(io) {
     io.stdout([
@@ -7,7 +8,7 @@ function printUsage(io) {
         "",
         "Options:",
         "  --check               Report legacy category fields without rewriting files.",
-        "  --skills-root <path>  Override the default ./skills root.",
+        "  --skills-root <path>  Override the default package-relative ./skills root.",
         "  --help                Show this help message."
     ].join("\n"));
 }
@@ -53,10 +54,7 @@ export async function runFrontmatterMigrationCli(argv, io) {
             printUsage(io);
             return 0;
         }
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = path.dirname(__filename);
-        const projectRoot = path.resolve(__dirname, "../..");
-        const skillsRoot = path.resolve(projectRoot, options.skillsRoot ?? "skills");
+        const skillsRoot = resolveSkillsRootFromModule(import.meta.url, options.skillsRoot);
         const summary = await migrateSkillsFrontmatter({
             skillsRoot,
             check: options.check

@@ -3,9 +3,10 @@ import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { resolveSkillsRootFromModule } from "../src/project-paths.js";
 import { listSkillManifests, loadSkill } from "../src/skills/loader.js";
 
-const skillsRoot = path.resolve(process.cwd(), "skills");
+const skillsRoot = resolveSkillsRootFromModule(import.meta.url);
 
 test("loadSkill reads frontmatter and body", async () => {
   const skill = await loadSkill(skillsRoot, "document-qa");
@@ -126,11 +127,15 @@ test("loadSkill reads markdown-format-normalization metadata and body", async ()
   const skill = await loadSkill(skillsRoot, "markdown-format-normalization");
   assert.equal(skill.id, "markdown-format-normalization");
   assert.equal(skill.name, "markdown-format-normalization");
-  assert.ok(skill.description.includes("original Markdown content"));
+  assert.ok(skill.description.includes("original Markdown wording"));
   assert.ok(skill.description.includes("page boundaries"));
-  assert.ok(skill.description.includes("standardized frontmatter schema"));
+  assert.ok(skill.description.includes("flat plain text"));
   assert.ok(skill.body.includes("Treat every `---` separator as a page boundary"));
-  assert.ok(skill.body.includes("Use `>` only for direct quotations"));
+  assert.ok(skill.body.includes("Use `>` for direct quotations"));
+  assert.ok(skill.body.includes("standalone figure or table captions"));
+  assert.ok(skill.body.includes("abstract blocks"));
+  assert.ok(skill.body.includes("Preserve the first occurrence of a document-identifying header or footer"));
+  assert.ok(skill.body.includes("left as unnecessary plain text"));
   assert.ok(skill.body.includes("tags`, `previous_lecture`, `next_lecture`, `related_notes`, and `updated`"));
   assert.ok(skill.body.includes("## Integration"));
 });
@@ -253,7 +258,7 @@ test("listSkillManifests returns installed skills", async () => {
 });
 
 test("loadSkill rejects skills with legacy category frontmatter", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-loader-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-loader-"));
   const tempSkillRoot = path.join(tempRoot, "legacy-category");
   await mkdir(tempSkillRoot, { recursive: true });
   await writeFile(
@@ -279,7 +284,7 @@ test("loadSkill rejects skills with legacy category frontmatter", async () => {
 });
 
 test("loadSkill rejects skills whose frontmatter name is not hyphen-case", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-loader-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-loader-"));
   const tempSkillRoot = path.join(tempRoot, "bad-name");
   await mkdir(tempSkillRoot, { recursive: true });
   await writeFile(
@@ -304,7 +309,7 @@ test("loadSkill rejects skills whose frontmatter name is not hyphen-case", async
 });
 
 test("loadSkill rejects skills whose frontmatter name does not match folder id", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-loader-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-loader-"));
   const tempSkillRoot = path.join(tempRoot, "folder-id");
   await mkdir(tempSkillRoot, { recursive: true });
   await writeFile(

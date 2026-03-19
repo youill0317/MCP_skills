@@ -17,6 +17,72 @@ Paragraph text.
 - First-time participants
 ```
 
+## Example: Promote Plain Text Heading Without Rewriting
+
+```markdown
+Background
+
+The study compares two cohorts.
+```
+
+becomes
+
+```markdown
+# Background
+
+The study compares two cohorts.
+```
+
+## Example: Promote Parallel Plain Text to a List
+
+```markdown
+Key findings
+Accuracy improved
+Response time decreased
+Error rate stayed low
+```
+
+becomes
+
+```markdown
+# Key findings
+
+- Accuracy improved
+- Response time decreased
+- Error rate stayed low
+```
+
+## Example: Keep First Header, Remove Later Repetition
+
+```markdown
+Course Notes | Week 03 | Page 1
+
+# Regression
+
+---
+
+Course Notes | Week 03 | Page 2
+
+Assumptions
+Linearity
+Independence
+```
+
+becomes
+
+```markdown
+Course Notes | Week 03 | Page 1
+
+# Regression
+
+---
+
+# Assumptions
+
+- Linearity
+- Independence
+```
+
 ## Example: Same Topic Across Two Pages Without Merging
 
 ```markdown
@@ -44,6 +110,39 @@ Continuation paragraph for the same topic on the next page.
 > "This framework improved retention by 12%."
 
 General note about how the study was summarized in class.
+```
+
+## Example: Figure Caption as a Blockquote
+
+```markdown
+![Model overview](figure-1.png)
+
+Figure 1. Overall model architecture and data flow.
+```
+
+becomes
+
+```markdown
+![Model overview](figure-1.png)
+
+> Figure 1. Overall model architecture and data flow.
+```
+
+## Example: Paper Abstract as a Blockquote
+
+```markdown
+Abstract
+This study compares two retrieval strategies across three evaluation settings.
+The proposed method improves recall while preserving precision.
+```
+
+becomes
+
+```markdown
+# Abstract
+
+> This study compares two retrieval strategies across three evaluation settings.
+> The proposed method improves recall while preserving precision.
 ```
 
 ## Example: Recoverable Table Repair

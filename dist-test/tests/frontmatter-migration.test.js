@@ -42,7 +42,7 @@ test("removeLegacyCategoryFromSkillContent removes only the legacy category line
     assert.ok(result.content.includes("# Mission"));
 });
 test("migrateSkillsFrontmatter updates legacy skills and leaves current skills untouched", async () => {
-    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
     const legacySkillRoot = path.join(tempRoot, "legacy-skill");
     const currentSkillRoot = path.join(tempRoot, "current-skill");
     await mkdir(legacySkillRoot, { recursive: true });
@@ -80,7 +80,7 @@ test("migrateSkillsFrontmatter updates legacy skills and leaves current skills u
     assert.equal(currentAfter, currentRaw);
 });
 test("migrateSkillsFrontmatter check mode reports pending updates without writing files", async () => {
-    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
     const legacySkillRoot = path.join(tempRoot, "legacy-skill");
     await mkdir(legacySkillRoot, { recursive: true });
     const legacyRaw = [
@@ -101,7 +101,7 @@ test("migrateSkillsFrontmatter check mode reports pending updates without writin
     assert.equal(fileAfter, legacyRaw);
 });
 test("runFrontmatterMigrationCli returns non-zero in check mode when legacy category remains", async () => {
-    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
     const legacySkillRoot = path.join(tempRoot, "legacy-skill");
     await mkdir(legacySkillRoot, { recursive: true });
     await writeFile(path.join(legacySkillRoot, "SKILL.md"), [
@@ -122,7 +122,7 @@ test("runFrontmatterMigrationCli returns non-zero in check mode when legacy cate
     assert.ok(capture.stderr.some((line) => line.includes("Legacy category frontmatter still exists")));
 });
 test("runFrontmatterMigrationCli applies the migration and succeeds", async () => {
-    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
     const legacySkillRoot = path.join(tempRoot, "legacy-skill");
     await mkdir(legacySkillRoot, { recursive: true });
     await writeFile(path.join(legacySkillRoot, "SKILL.md"), [

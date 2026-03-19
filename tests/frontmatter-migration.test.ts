@@ -54,7 +54,7 @@ test("removeLegacyCategoryFromSkillContent removes only the legacy category line
 });
 
 test("migrateSkillsFrontmatter updates legacy skills and leaves current skills untouched", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
   const legacySkillRoot = path.join(tempRoot, "legacy-skill");
   const currentSkillRoot = path.join(tempRoot, "current-skill");
   await mkdir(legacySkillRoot, { recursive: true });
@@ -103,7 +103,7 @@ test("migrateSkillsFrontmatter updates legacy skills and leaves current skills u
 });
 
 test("migrateSkillsFrontmatter check mode reports pending updates without writing files", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
   const legacySkillRoot = path.join(tempRoot, "legacy-skill");
   await mkdir(legacySkillRoot, { recursive: true });
 
@@ -129,7 +129,7 @@ test("migrateSkillsFrontmatter check mode reports pending updates without writin
 });
 
 test("runFrontmatterMigrationCli returns non-zero in check mode when legacy category remains", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
   const legacySkillRoot = path.join(tempRoot, "legacy-skill");
   await mkdir(legacySkillRoot, { recursive: true });
   await writeFile(
@@ -157,7 +157,7 @@ test("runFrontmatterMigrationCli returns non-zero in check mode when legacy cate
 });
 
 test("runFrontmatterMigrationCli applies the migration and succeeds", async () => {
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "mcp-skills-migrate-"));
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-migrate-"));
   const legacySkillRoot = path.join(tempRoot, "legacy-skill");
   await mkdir(legacySkillRoot, { recursive: true });
   await writeFile(

@@ -55,7 +55,7 @@ Every output must:
 
 1. Use when the user wants a better-structured new Markdown file with a standardized frontmatter schema, not a light cleanup of the existing one.
 2. Use instead of `markdown-format-normalization` when the section order, hierarchy, grouping, or document shape should change.
-3. Do not use this skill when the original structure must remain recognizable; use `markdown-format-normalization` for source-faithful cleanup.
+3. Do not use this skill when the original wording, tone, sentence order, and page order must remain recognizable; use `markdown-format-normalization` for source-faithful cleanup with aggressive Markdown notation.
 4. Do not use summary-oriented skills as substitutes for structural rewriting.
 
 ## Resource Loading

@@ -1,5 +1,6 @@
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
+import { resolveSkillsRootFromModule } from "../project-paths.js";
 import { validateSkills } from "../skills/validate.js";
 import type { SkillValidationSummary } from "../types.js";
 
@@ -19,7 +20,7 @@ function printUsage(io: CliIo): void {
       "Usage: tsx src/cli/validate-skills.ts [--skills-root <path>]",
       "",
       "Options:",
-      "  --skills-root <path>  Override the default ./skills root.",
+      "  --skills-root <path>  Override the default package-relative ./skills root.",
       "  --help                Show this help message."
     ].join("\n")
   );
@@ -70,10 +71,7 @@ export async function runValidateSkillsCli(argv: string[], io: CliIo): Promise<n
       return 0;
     }
 
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const projectRoot = path.resolve(__dirname, "../..");
-    const skillsRoot = path.resolve(projectRoot, options.skillsRoot ?? "skills");
+    const skillsRoot = resolveSkillsRootFromModule(import.meta.url, options.skillsRoot);
     const summary = await validateSkills(skillsRoot);
 
     printSummary(io, summary, skillsRoot);
