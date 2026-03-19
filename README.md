@@ -54,6 +54,36 @@ npm run migrate:skills-frontmatter
 npm run migrate:skills-frontmatter -- --check
 ```
 
+## Minimal Integrity Validation
+
+이 저장소의 자동 검증은 `문서 품질 평가`가 아니라 `구조 무결성 확인`만 담당합니다.
+
+- 자동화는 `pre-commit` 하나만 유지합니다.
+- staged된 관련 파일이 있을 때만 `npm run validate:skills`를 실행합니다.
+- 품질 평가는 [skill_authoring_best_practices_restructured.md](c:/Users/user/Documents/Projects/GitHub/skill_authoring_best_practices_restructured.md)를 컨텍스트로 한 LLM 리뷰가 담당합니다.
+
+검사 대상:
+
+- `SKILL.md` 존재 여부
+- frontmatter 파싱 가능 여부
+- `name`, `description` 필수 여부
+- kebab-case `name`과 폴더명 일치 여부
+- legacy `category` 금지
+- 본문에서 직접 언급한 `references/...`, `scripts/...`, `assets/...` 경로 존재 여부
+- 경로 해석 시 절대경로 및 path traversal 차단
+
+새 Skill을 추가하거나 수정할 때 최소 절차:
+
+```bash
+npm run validate:skills
+```
+
+권장 흐름:
+
+1. `npm run validate:skills`
+2. [skill_authoring_best_practices_restructured.md](c:/Users/user/Documents/Projects/GitHub/skill_authoring_best_practices_restructured.md)를 컨텍스트로 LLM 리뷰 실행
+3. 커밋
+
 ## 클라이언트별 사용
 
 - Claude Code: 필요하면 스킬 코어를 Claude가 읽는 스킬 위치로 복사하거나 연결하고, 별도 등록 파일은 클라이언트 쪽에서 관리합니다.

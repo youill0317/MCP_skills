@@ -8,7 +8,7 @@ interface FrontmatterParseResult {
   body: string;
 }
 
-function parseSimpleYamlFrontmatter(raw: string): FrontmatterParseResult {
+export function parseSimpleYamlFrontmatter(raw: string): FrontmatterParseResult {
   if (!raw.startsWith("---")) {
     throw new Error("SKILL.md must start with YAML frontmatter.");
   }
@@ -71,7 +71,7 @@ function parseSimpleYamlFrontmatter(raw: string): FrontmatterParseResult {
   };
 }
 
-function validateSkillFrontmatter(frontmatter: SkillFrontmatter, skillId: string): void {
+export function validateSkillFrontmatter(frontmatter: SkillFrontmatter, skillId: string): void {
   if (!validateSkillId(frontmatter.name)) {
     throw new Error("SKILL.md frontmatter 'name' must use lowercase letters, numbers, and hyphens only.");
   }
@@ -81,7 +81,7 @@ function validateSkillFrontmatter(frontmatter: SkillFrontmatter, skillId: string
   }
 }
 
-async function listFilesRecursivelyIfExists(rootPath: string, subFolder: string): Promise<string[]> {
+export async function listFilesRecursivelyIfExists(rootPath: string, subFolder: string): Promise<string[]> {
   const targetPath = path.resolve(rootPath, subFolder);
   try {
     const folderStat = await stat(targetPath);

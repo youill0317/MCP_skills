@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "setup:hooks": "node scripts/setup-hooks.mjs",
+    "prepare": "npm run setup:hooks",
     "validate:skills": "npm run build --silent && node dist/cli/validate-skills.js",
+    "check:pre-commit": "node scripts/run-precommit-check.mjs",
     "migrate:skills-frontmatter": "npm run build --silent && node dist/cli/migrate-skills-frontmatter.js",
     "test": "tsc -p tsconfig.tests.json && node dist-test/tests/all.test.js"
   },

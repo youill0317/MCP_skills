@@ -3,6 +3,12 @@ export interface SkillFrontmatter {
   description: string;
 }
 
+export interface ValidationLocation {
+  path: string;
+  line: number;
+  column: number;
+}
+
 export interface SkillManifest extends SkillFrontmatter {
   id: string;
   rootPath: string;
@@ -16,10 +22,18 @@ export interface LoadedSkill extends SkillManifest {
   body: string;
 }
 
+export interface SkillValidationIssue {
+  ruleId: string;
+  message: string;
+  location?: ValidationLocation;
+}
+
 export interface SkillValidationRecord {
   skillId: string;
   status: "valid" | "invalid" | "missing";
   skillFilePath: string;
+  issues: SkillValidationIssue[];
+  errors: number;
   message?: string;
 }
 
@@ -28,4 +42,5 @@ export interface SkillValidationSummary {
   valid: number;
   invalid: number;
   missing: number;
+  errors: number;
 }
