@@ -4,15 +4,19 @@ import { resolveSkillsRootFromModule } from "../project-paths.js";
 import { validateSkills } from "../skills/validate.js";
 function printUsage(io) {
     io.stdout([
-        "Usage: tsx src/cli/validate-skills.ts [--skills-root <path>]",
+        "Usage: tsx src/cli/validate-skills.ts [--skills-root <path>] [--report text|json]",
         "",
         "Options:",
-        "  --skills-root <path>  Override the default package-relative ./skills root.",
-        "  --help                Show this help message."
+        "  --skills-root <path>   Override the default package-relative ./skills root.",
+        "  --report <format>      Output format: text (default) or json.",
+        "  --help                 Show this help message."
     ].join("\n"));
 }
 function parseCliOptions(argv) {
-    const options = { help: false };
+    const options = {
+        help: false,
+        report: "text"
+    };
     for (let index = 0; index < argv.length; index += 1) {
         const arg = argv[index];
         if (arg === "--skills-root") {
@@ -24,6 +28,15 @@ function parseCliOptions(argv) {
             index += 1;
             continue;
         }
+        if (arg === "--report") {
+            const value = argv[index + 1];
+            if (value !== "text" && value !== "json") {
+                throw new Error("--report requires either 'text' or 'json'.");
+            }
+            options.report = value;
+            index += 1;
+            continue;
+        }
         if (arg === "--help" || arg === "-h") {
             options.help = true;
             continue;
@@ -32,12 +45,27 @@ function parseCliOptions(argv) {
     }
     return options;
 }
-function printSummary(io, summary, skillsRoot) {
+function formatIssue(issue) {
+    const location = issue.location
+        ? ` (${issue.location.path}:${issue.location.line}:${issue.location.column})`
+        : "";
+    return `    - ${issue.ruleId}: ${issue.message}${location}`;
+}
+function printTextSummary(io, summary, skillsRoot) {
     io.stdout(`Skills root: ${skillsRoot}`);
-    io.stdout(`Summary: valid=${summary.valid} invalid=${summary.invalid} missing=${summary.missing}`);
+    io.stdout([
+        "Summary:",
+        `valid=${summary.valid}`,
+        `invalid=${summary.invalid}`,
+        `missing=${summary.missing}`,
+        `errors=${summary.errors}`
+    ].join(" "));
     for (const record of summary.records) {
         const detail = record.message ? ` (${record.message})` : "";
-        io.stdout(`- ${record.skillId}: ${record.status}${detail}`);
+        io.stdout(`- ${record.skillId}: ${record.status} errors=${record.errors}${detail}`);
+        for (const issue of record.issues) {
+            io.stdout(formatIssue(issue));
+        }
     }
 }
 export async function runValidateSkillsCli(argv, io) {
@@ -49,9 +77,17 @@ export async function runValidateSkillsCli(argv, io) {
         }
         const skillsRoot = resolveSkillsRootFromModule(import.meta.url, options.skillsRoot);
         const summary = await validateSkills(skillsRoot);
-        printSummary(io, summary, skillsRoot);
-        if (summary.invalid > 0 || summary.missing > 0) {
-            io.stderr("Skill validation failed. Fix invalid or missing SKILL.md files.");
+        if (options.report === "json") {
+            io.stdout(JSON.stringify({
+                skillsRoot,
+                summary
+            }, null, 2));
+        }
+        else {
+            printTextSummary(io, summary, skillsRoot);
+        }
+        if (summary.errors > 0) {
+            io.stderr("Skill validation reported structural failures.");
             return 1;
         }
         return 0;

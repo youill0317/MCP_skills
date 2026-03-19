@@ -45,3 +45,7 @@ Thumbs.db
 # Spec Kit bootstrap artifacts
 .specify/
 .codex/prompts/speckit.*.md
+
+# Spec Kit generated artifacts
+specs/
+AGENTS.md

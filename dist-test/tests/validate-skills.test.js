@@ -22,12 +22,18 @@ function createIoCapture() {
         }
     };
 }
-test("validateSkills succeeds for the current repository skills root", async () => {
+async function writeSkill(root, skillId, description, body = "# Mission\n\nUse references/example.md") {
+    const skillRoot = path.join(root, skillId);
+    await mkdir(skillRoot, { recursive: true });
+    await writeFile(path.join(skillRoot, "SKILL.md"), ["---", `name: ${skillId}`, `description: ${description}`, "---", "", body].join("\n"), "utf8");
+}
+test("validateSkills succeeds for the current repository skills root without structural errors", async () => {
     const skillsRoot = resolveSkillsRootFromModule(import.meta.url);
     const summary = await validateSkills(skillsRoot);
     assert.ok(summary.valid > 0);
     assert.equal(summary.invalid, 0);
     assert.equal(summary.missing, 0);
+    assert.equal(summary.errors, 0);
 });
 test("runValidateSkillsCli resolves the default skills root independently of cwd", async () => {
     const packageRoot = findPackageRootFromModule(import.meta.url);
@@ -46,15 +52,13 @@ test("runValidateSkillsCli resolves the default skills root independently of cwd
 });
 test("runValidateSkillsCli fails when a skill folder name is invalid", async () => {
     const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-validate-"));
-    const invalidSkillRoot = path.join(tempRoot, "Bad Skill");
-    await mkdir(invalidSkillRoot, { recursive: true });
-    await writeFile(path.join(invalidSkillRoot, "SKILL.md"), ["---", "name: bad-skill", "description: Invalid folder name.", "---", "", "# Mission"].join("\n"), "utf8");
+    await writeSkill(tempRoot, "good-skill", "Guide for validating a sample skill.");
+    await mkdir(path.join(tempRoot, "Bad Skill"), { recursive: true });
     const capture = createIoCapture();
     const exitCode = await runValidateSkillsCli(["--skills-root", tempRoot], capture.io);
     assert.equal(exitCode, 1);
-    assert.ok(capture.stdout.some((line) => line.includes("invalid=1")));
+    assert.ok(capture.stdout.some((line) => line.includes("errors=1")));
     assert.ok(capture.stdout.some((line) => line.includes("Bad Skill: invalid")));
-    assert.ok(capture.stderr.some((line) => line.includes("Skill validation failed")));
 });
 test("runValidateSkillsCli fails when SKILL.md is missing", async () => {
     const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-validate-"));
@@ -64,4 +68,40 @@ test("runValidateSkillsCli fails when SKILL.md is missing", async () => {
     assert.equal(exitCode, 1);
     assert.ok(capture.stdout.some((line) => line.includes("missing=1")));
     assert.ok(capture.stdout.some((line) => line.includes("missing-skill: missing")));
+});
+test("validateSkills fails when SKILL.md frontmatter is malformed", async () => {
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-validate-"));
+    const skillRoot = path.join(tempRoot, "broken-frontmatter");
+    await mkdir(skillRoot, { recursive: true });
+    await writeFile(path.join(skillRoot, "SKILL.md"), ["---", "name: broken-frontmatter", "description: Missing frontmatter closing fence.", "", "# Mission"].join("\n"), "utf8");
+    const summary = await validateSkills(tempRoot);
+    assert.equal(summary.errors, 1);
+    assert.equal(summary.records[0]?.status, "invalid");
+    assert.ok(summary.records[0]?.issues.some((issue) => issue.ruleId === "invalid-skill-manifest"));
+});
+test("validateSkills fails when frontmatter name does not match the folder id", async () => {
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-validate-"));
+    const skillRoot = path.join(tempRoot, "folder-mismatch");
+    await mkdir(skillRoot, { recursive: true });
+    await writeFile(path.join(skillRoot, "SKILL.md"), ["---", "name: another-skill", "description: Folder mismatch example.", "---", "", "# Mission"].join("\n"), "utf8");
+    const summary = await validateSkills(tempRoot);
+    assert.equal(summary.errors, 1);
+    assert.equal(summary.records[0]?.status, "invalid");
+    assert.ok(summary.records[0]?.issues.some((issue) => issue.ruleId === "invalid-skill-manifest"));
+});
+test("validateSkills fails when a referenced resource does not exist", async () => {
+    const tempRoot = await mkdtemp(path.join(os.tmpdir(), "skill-registry-validate-"));
+    await writeSkill(tempRoot, "broken-reference", "Guide for a broken reference example.", "# Mission\n\nLoad references/missing.md before continuing.");
+    const summary = await validateSkills(tempRoot);
+    assert.equal(summary.errors, 1);
+    assert.equal(summary.records[0]?.status, "invalid");
+    assert.ok(summary.records[0]?.issues.some((issue) => issue.ruleId === "missing-resource-reference"));
+});
+test("runValidateSkillsCli supports JSON reports", async () => {
+    const capture = createIoCapture();
+    const exitCode = await runValidateSkillsCli(["--report", "json"], capture.io);
+    assert.equal(exitCode, 0);
+    const parsed = JSON.parse(capture.stdout.join("\n"));
+    assert.ok(parsed.skillsRoot.endsWith(path.join("skill-registry", "skills")));
+    assert.equal(typeof parsed.summary.errors, "number");
 });

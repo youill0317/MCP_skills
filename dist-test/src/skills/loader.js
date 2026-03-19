@@ -1,7 +1,7 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { normalizeToPosix, resolvePathWithinRoot, validateSkillId } from "../security/policy.js";
-function parseSimpleYamlFrontmatter(raw) {
+export function parseSimpleYamlFrontmatter(raw) {
     if (!raw.startsWith("---")) {
         throw new Error("SKILL.md must start with YAML frontmatter.");
     }
@@ -51,7 +51,7 @@ function parseSimpleYamlFrontmatter(raw) {
         body
     };
 }
-function validateSkillFrontmatter(frontmatter, skillId) {
+export function validateSkillFrontmatter(frontmatter, skillId) {
     if (!validateSkillId(frontmatter.name)) {
         throw new Error("SKILL.md frontmatter 'name' must use lowercase letters, numbers, and hyphens only.");
     }
@@ -59,7 +59,7 @@ function validateSkillFrontmatter(frontmatter, skillId) {
         throw new Error(`SKILL.md frontmatter 'name' must match folder id '${skillId}'.`);
     }
 }
-async function listFilesRecursivelyIfExists(rootPath, subFolder) {
+export async function listFilesRecursivelyIfExists(rootPath, subFolder) {
     const targetPath = path.resolve(rootPath, subFolder);
     try {
         const folderStat = await stat(targetPath);
