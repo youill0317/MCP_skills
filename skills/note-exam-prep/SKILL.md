@@ -65,7 +65,7 @@ Quality rules:
 
 ## Integration
 
-1. Use with `obsidian-mcp` when the current note/page must be located or read first.
+1. Use after the target note, page, or pasted content has been identified and loaded.
 2. Use after `markdown-structuring` when scattered research notes must be reorganized before question generation.
 3. Use after `markdown-format-normalization` when source-faithful Markdown needs light cleanup before question generation.
 

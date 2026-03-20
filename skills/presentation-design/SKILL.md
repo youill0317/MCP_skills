@@ -106,12 +106,11 @@ Integrity tags:
 ## Integration
 
 1. If `research-strategy` output is provided, preserve evidence confidence and unresolved conflicts.
-2. Use `search-mcp` only when provider/tool selection guidance is needed for additional evidence gathering.
-3. If `report-writing` output is provided, convert section findings into slide narrative without adding facts.
-4. If `academic-writing` output is provided, condense paper sections into audience-fit slide messages.
-5. Use after `document-summary` when the source material is long and first needs compression.
-6. Use `document-qa` to ground ambiguous deck claims in local evidence before escalating to web checks.
-7. Keep this skill limited to slide-based work; treat posters, flyers, banners, card-news, and other non-slide visual assets as outside this skill's scope.
+2. If `report-writing` output is provided, convert section findings into slide narrative without adding facts.
+3. If `academic-writing` output is provided, condense paper sections into audience-fit slide messages.
+4. Use after `document-summary` when the source material is long and first needs compression.
+5. Use `document-qa` to ground ambiguous deck claims in local evidence before escalating to web checks.
+6. Keep this skill limited to slide-based work; treat posters, flyers, banners, card-news, and other non-slide visual assets as outside this skill's scope.
 
 ## Resource Loading
 

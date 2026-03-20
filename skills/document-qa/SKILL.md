@@ -67,7 +67,7 @@ These statuses are separate from the confidence scale.
 
 ## Integration
 
-1. Use after `obsidian-mcp` when note discovery or narrow file reads are needed first.
+1. Use after the relevant notes or local files have already been located and narrowed to the sections that matter.
 2. Feed outputs into `document-summary` or `report-writing` when the next step is synthesis.
 3. Preserve exact excerpts, conflict notes, and confidence notes when downstream skills reuse the answer.
 

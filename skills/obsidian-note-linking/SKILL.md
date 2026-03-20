@@ -68,7 +68,7 @@ Quality rules:
 
 ## Integration
 
-1. Use with `obsidian-mcp` for tool-family selection and safe discovery/read flow.
+1. Use after confirming the target note and reading only the narrow vault excerpts needed to validate candidate links.
 2. Hand off refined notes to `document-summary` when user wants merged synthesis.
 
 ## Resource Loading

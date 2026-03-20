@@ -17,7 +17,7 @@ Run external research workflows that balance speed, coverage, and verification a
 
 1. Define the research mode, query decomposition, verification depth, and synthesis discipline for external research tasks.
 2. Support fast overview work and exhaustive multi-pass research.
-3. Keep provider-specific MCP parameter details out of this skill; defer those to `search-mcp` while still deciding when built-in web search vs MCP vs hybrid should be used.
+3. Keep provider-specific parameter details out of this skill while still deciding when built-in web search, external research tools, or a hybrid workflow should be used.
 4. Produce research findings or a research execution guide, not polished final deliverables.
 
 ## Core Workflow
@@ -27,7 +27,7 @@ Run external research workflows that balance speed, coverage, and verification a
 3. Break the task into the smallest set of answerable sub-questions.
 4. Decide what needs breadth, what needs verification, and what needs freshness checks.
 5. Choose retrieval stack by phase: built-in only, MCP only, or hybrid (fallback to MCP only when built-in search is unavailable).
-6. Use `search-mcp` whenever provider choice, tool family, or provider-specific parameterization is unclear.
+6. Keep provider choice and parameterization lightweight unless the task clearly needs a specialized capability.
 7. Run retrieval in passes: discovery, focused verification, and contradiction handling as needed.
 8. Separate confirmed findings, open questions, and unresolved conflicts.
 9. Return research output that downstream task skills can consume without re-running the same search logic.
@@ -52,9 +52,8 @@ Research rules:
 
 ## Integration
 
-1. Use `search-mcp` when provider/tool choice is the blocker, especially in hybrid plans.
-2. Feed completed findings into `report-writing`, `presentation-design`, or `academic-writing`.
-3. Use with `problem-definition` when validation questions require external evidence.
+1. Feed completed findings into `report-writing`, `presentation-design`, or `academic-writing`.
+2. Use with `problem-definition` when validation questions require external evidence.
 
 ## Resource Loading
 

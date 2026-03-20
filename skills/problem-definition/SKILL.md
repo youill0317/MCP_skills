@@ -61,8 +61,7 @@ Integrity tags:
 
 1. Use before the solution path should be locked when the problem still needs clarification.
 2. Use `research-strategy` or `document-qa` afterwards if the validation questions require evidence gathering.
-3. Use `search-mcp` only if the evidence-gathering path is blocked on provider/tool selection.
-4. Preserve assumptions, blind spots, and next-investigation tasks in downstream outputs.
+3. Preserve assumptions, blind spots, and next-investigation tasks in downstream outputs.
 
 ## Resource Loading
 

@@ -46,11 +46,10 @@ Transform organized evidence into clear, decision-ready reports with recognizabl
 ## Integration
 
 1. Accept outputs from `research-strategy`, `document-summary`, or `document-qa` and preserve their citation markers.
-2. Use `search-mcp` only when extra provider/tool guidance is needed before more research.
-3. Use confidence labels from upstream research outputs to calibrate language strength.
-4. Carry forward unresolved contradictions into the report's limitations section.
-5. Treat `document-summary` output as source material to be expanded and reorganized into a report, not as the final deliverable.
-6. Hand finished reports to `presentation-design` or `academic-writing` without adding new facts during handoff.
+2. Use confidence labels from upstream research outputs to calibrate language strength.
+3. Carry forward unresolved contradictions into the report's limitations section.
+4. Treat `document-summary` output as source material to be expanded and reorganized into a report, not as the final deliverable.
+5. Hand finished reports to `presentation-design` or `academic-writing` without adding new facts during handoff.
 
 ## Resource Loading
 

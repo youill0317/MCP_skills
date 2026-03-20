@@ -61,14 +61,6 @@ test("loadSkill reads document-summary memo-style boundary", async () => {
   assert.ok(skill.body.includes("## Output Standard"));
 });
 
-test("loadSkill reads search-mcp metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "search-mcp");
-  assert.equal(skill.id, "search-mcp");
-  assert.equal(skill.name, "search-mcp");
-  assert.ok(skill.description.includes("individual search MCP servers"));
-  assert.ok(skill.body.includes("provider/tool selection"));
-});
-
 test("loadSkill reads markdown-structuring metadata and body", async () => {
   const skill = await loadSkill(skillsRoot, "markdown-structuring");
   assert.equal(skill.id, "markdown-structuring");
@@ -85,23 +77,6 @@ test("loadSkill reads research-strategy metadata and body", async () => {
   assert.equal(skill.name, "research-strategy");
   assert.ok(skill.description.includes("web research"));
   assert.ok(skill.body.includes("## Resource Loading"));
-});
-
-test("loadSkill reads obsidian-mcp metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "obsidian-mcp");
-  assert.equal(skill.id, "obsidian-mcp");
-  assert.equal(skill.name, "obsidian-mcp");
-  assert.ok(skill.description.includes("`mcp_obsidian`"));
-  assert.ok(skill.body.includes("## Core Workflow"));
-});
-
-test("loadSkill reads canva-mcp metadata and body", async () => {
-  const skill = await loadSkill(skillsRoot, "canva-mcp");
-  assert.equal(skill.id, "canva-mcp");
-  assert.equal(skill.name, "canva-mcp");
-  assert.ok(skill.description.includes("official Canva MCP connector"));
-  assert.ok(skill.description.includes("web link plus a short local Markdown design report"));
-  assert.ok(skill.body.includes("## Core Workflow"));
 });
 
 test("loadSkill reads obsidian-note-linking metadata and body", async () => {
@@ -152,28 +127,20 @@ test("loadSkill reads note-exam-prep metadata and body", async () => {
 test("listSkillManifests returns installed skills", async () => {
   const manifests = await listSkillManifests(skillsRoot);
   const ids = manifests.map((item) => item.id);
-  assert.ok(ids.includes("document-qa"));
-  assert.ok(ids.includes("document-summary"));
-  assert.ok(ids.includes("search-mcp"));
-  assert.ok(ids.includes("research-strategy"));
-  assert.ok(ids.includes("obsidian-mcp"));
-  assert.ok(ids.includes("canva-mcp"));
-  assert.ok(ids.includes("obsidian-note-linking"));
-  assert.ok(ids.includes("report-writing"));
-  assert.ok(ids.includes("academic-writing"));
-  assert.ok(ids.includes("presentation-design"));
-  assert.ok(ids.includes("problem-definition"));
-  assert.ok(ids.includes("markdown-structuring"));
-  assert.ok(ids.includes("markdown-format-normalization"));
-  assert.ok(ids.includes("note-exam-prep"));
-
-  const search = manifests.find((item) => item.id === "search-mcp");
-  assert.ok(search);
-  assert.equal(search.name, "search-mcp");
-  assert.ok(search.references.includes("references/brave.md"));
-  assert.ok(search.references.includes("references/scholar.md"));
-  assert.ok(!search.references.includes("references/quick-search-mode.md"));
-  assert.ok(!search.references.includes("references/deep-research-mode.md"));
+  assert.deepEqual(ids, [
+    "academic-writing",
+    "document-qa",
+    "document-summary",
+    "markdown-format-normalization",
+    "markdown-structuring",
+    "note-exam-prep",
+    "obsidian-note-linking",
+    "presentation-design",
+    "problem-definition",
+    "report-writing",
+    "research-strategy"
+  ]);
+  assert.equal(manifests.length, 11);
 
   const markdownStructuring = manifests.find((item) => item.id === "markdown-structuring");
   assert.ok(markdownStructuring);
@@ -187,20 +154,6 @@ test("listSkillManifests returns installed skills", async () => {
   assert.equal(researchStrategy.name, "research-strategy");
   assert.ok(researchStrategy.references.includes("references/quick-search-mode.md"));
   assert.ok(researchStrategy.references.includes("references/deep-research-mode.md"));
-
-  const obsidian = manifests.find((item) => item.id === "obsidian-mcp");
-  assert.ok(obsidian);
-  assert.equal(obsidian.name, "obsidian-mcp");
-  assert.ok(obsidian.references.includes("references/read-and-link-tools.md"));
-  assert.ok(obsidian.references.includes("references/resources-and-config.md"));
-
-  const canva = manifests.find((item) => item.id === "canva-mcp");
-  assert.ok(canva);
-  assert.equal(canva.name, "canva-mcp");
-  assert.ok(canva.references.includes("references/tool-families.md"));
-  assert.ok(canva.references.includes("references/generation-and-assets.md"));
-  assert.ok(canva.references.includes("references/access-export-and-ops.md"));
-  assert.ok(canva.references.includes("references/delivery-and-reporting.md"));
 
   const reportWriting = manifests.find((item) => item.id === "report-writing");
   assert.ok(reportWriting);
